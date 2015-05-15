@@ -1,50 +1,62 @@
 import javax.swing.*;
 import java.awt.event.*;
 import java.awt.*;
-import java.awt.Graphics;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.io.*;
 import javax.imageio.ImageIO;
-import javax.swing.JPanel;
-public class SplashScreen extends Thread 
+import java.awt.image.BufferedImage;
+
+public class SplashScreen extends JPanel 
 {
-  JPanel box;
-  int width = 30;
-  int length = 30;
-  int x = 150;
-  int y = 150;
+  Graphics g;
+  BufferedImage backgroundImage;
+  BufferedImage logo;
   
-  public SplashScreen(JPanel b)
+  public SplashScreen()
   {
-    box = b;
+    button();
+    repaint();
+  }
+  
+  @Override
+  public void paintComponent(Graphics g) 
+  {
+    try 
+    {
+      backgroundImage = ImageIO.read(new File("E:\\School\\2014-2015\\ICS4U\\final Project\\CookieByte Critter Sitter Software\\splashscreenbackground.jpg"));
+      logo = ImageIO.read(new File("E:\\School\\2014-2015\\ICS4U\final Project\\CookieByte Critter Sitter Software\\character2.jpg"));
+    } 
+    catch (IOException e) 
+    {
+      e.printStackTrace();
+    }
     
-    JLabel imgLabel = new JLabel(new ImageIcon("splashscreenbackground.jpg"));
-    box.add(imgLabel);
+    super.paintComponent(g);
+    Graphics2D g2d = (Graphics2D) g.create();
+    // g2d.setComposite(AlphaComposite.SrcOver.derive(alpha));
+    int x = (getWidth() - backgroundImage.getWidth()) / 2;
+    int y = (getHeight() - backgroundImage.getHeight()) / 2;
+    g2d.drawImage(backgroundImage, x, y, this);
+    
+    //g2d.setComposite(AlphaComposite.SrcOver.derive(1f - alpha));
+    x = (getWidth() - logo.getWidth()) / 2;
+    y = (getHeight() - logo.getHeight()) / 2;
+    g2d.drawImage(logo, 60, y, this);
+    g2d.dispose();
   }
   
-  public void draw() 
-  {
-    //Image inputImage;
-    // Picture canvas = new Picture("640x480.jpg");
-    // Picture jack = new Picture("splashscreenbackground.jpg");
-    //Graphics g = box.getGraphics();
-    //g.fillOval(x, y, width, length);
-    // Image myImage = getImage(getCodeBase(), "laura1a\\splashscreenbackground.jpg");
-    //  g.drawImage(myImage, 300,200,60,120,this);
-// inputImage = Toolkit.getDefaultToolkit().getImage("splashscreenbackground.jpg");
-    //MediaTracker mt = new MediaTracker (this);
-// mt.addImage(inputImage,0);
-//    BufferedImage myPicture = ImageIO.read(new File("splashscreenbackground.jpg"));
-//JLabel picLabel = new JLabel(new ImageIcon(myPicture));
-//this.add(picLabel);
-   
-  }
   
-  public void run() 
+  public void button()
   {
-    draw();
+    JButton calculate = new JButton ("Calculate");
+    add (calculate);
+    calculate.addActionListener (new ActionListener ()
+                                   {
+      public void actionPerformed (ActionEvent e)
+      {
+        System.out.println ("YESSS!");
+      }
+    }
+    );
   }
 }
+
