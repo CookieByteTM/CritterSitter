@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.event.*;
+import java.awt.*;
 /**
  * The CritterSitterApp is the driver class that creates CritterSitterApp
  as well as executes the program.
@@ -9,9 +10,14 @@ import java.awt.event.*;
  */
 public class CritterSitterApp extends JFrame implements ActionListener
 {
+  JDialog myDialog;
+  
   public CritterSitterApp()
   {
     super ("Critter Sitter");
+    
+    ImageIcon pic = new ImageIcon("splashscreenbackground.jpg");
+    JLabel map = new JLabel(pic);
     
     JMenuItem quitItem = new JMenuItem ("Quit");
     JMenuItem helpItem = new JMenuItem ("Help");
@@ -35,6 +41,7 @@ public class CritterSitterApp extends JFrame implements ActionListener
     setDefaultCloseOperation (JFrame.DISPOSE_ON_CLOSE);
     setResizable(false);
     add(new DisplayScreen());
+    add(map);
   }
   
   public CritterSitterApp (String title, String label, int xSize)
