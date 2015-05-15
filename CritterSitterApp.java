@@ -16,7 +16,7 @@ public class CritterSitterApp extends JFrame implements ActionListener
   {
     super ("Critter Sitter");
     
-    ImageIcon pic = new ImageIcon("splashscreenbackground.jpg");
+    ImageIcon pic = new ImageIcon("CompanyNameSplashScreen.jpg");
     JLabel map = new JLabel(pic);
     
     JMenuItem quitItem = new JMenuItem ("Quit");
@@ -76,10 +76,10 @@ public class CritterSitterApp extends JFrame implements ActionListener
     
     JButton closeButton = new JButton ("Close");
     closeButton.addActionListener (new ActionListener ()
-                                     {
+				     {
       public void actionPerformed (ActionEvent e)
       {
-        myDialog.dispose ();
+	myDialog.dispose ();
       }
     }
     );
