@@ -5,13 +5,12 @@ import java.io.*;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 
-public class SplashScreen extends JPanel 
+public class DisplayScreen extends JPanel 
 {
-  Graphics g;
   BufferedImage backgroundImage;
   BufferedImage logo;
   
-  public SplashScreen()
+  public DisplayScreen()
   {
     button();
     repaint();
@@ -23,7 +22,7 @@ public class SplashScreen extends JPanel
     try 
     {
       backgroundImage = ImageIO.read(new File("E:\\School\\2014-2015\\ICS4U\\final Project\\CookieByte Critter Sitter Software\\splashscreenbackground.jpg"));
-      logo = ImageIO.read(new File("E:\\School\\2014-2015\\ICS4U\final Project\\CookieByte Critter Sitter Software\\character2.jpg"));
+      //logo = ImageIO.read(new File("E:\\School\\2014-2015\\ICS4U\final Project\\CookieByte Critter Sitter Software\\character2.jpg"));
     } 
     catch (IOException e) 
     {
