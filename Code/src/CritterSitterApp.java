@@ -16,7 +16,7 @@ import java.awt.*;
  * <p>
  * <b>myDialog </b> This JDialog variable is used to make the different dialog boxes.
  */
-public class CritterSitterApp extends JFrame implements ActionListener
+public class CritterSitterApp extends JFrame
 {
   JDialog myDialog;
   
@@ -40,7 +40,8 @@ public class CritterSitterApp extends JFrame implements ActionListener
 //    }
 //    repaint();
     // ^above stuff works
-    add(new SplashScreen());
+    //add(new SplashScreen());
+    add(new MouseTester());
   }
   
   //do we need this method?
