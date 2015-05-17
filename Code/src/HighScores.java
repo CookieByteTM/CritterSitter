@@ -32,28 +32,28 @@ public class HighScores
    * 
    */
   //exception IOException e an IOException.
-  public void displayScores ()
-  {
-    int numScores = 0;
-      try
-    {
-      in = new BufferedReader (new FileReader ("HighScores.txt"));
-      if ((line == in.readLine ()) != null)
-        numScores = Integer.parseInt (line);
-      for (int x = 0 ; x < numScores ; x++)
-      {
-        // c.print (' ', 10);
-        // c.print (input.readLine ()
-        //         , 27);
-        // c.print (input.readLine ());
-        // c.print (' ', 27);
-        // c.println (x + 1);
-      }
-    }
-    catch (IOException e)
-    {
-    }
-  }
+//  public void displayScores ()
+//  {
+//    int numScores = 0;
+//      try
+//    {
+//      in = new BufferedReader (new FileReader ("HighScores.txt"));
+//      if ((line == in.readLine ()) != null)
+//        numScores = Integer.parseInt (line);
+//      for (int x = 0 ; x < numScores ; x++)
+//      {
+//        // c.print (' ', 10);
+//        // c.print (input.readLine ()
+//        //         , 27);
+//        // c.print (input.readLine ());
+//        // c.print (' ', 27);
+//        // c.println (x + 1);
+//      }
+//    }
+//    catch (IOException e)
+//    {
+//    }
+//  }
   
   /**
    * The processAndUpdateScores method processes and updates the scores by sorting them.

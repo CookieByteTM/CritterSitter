@@ -5,42 +5,33 @@ import java.io.*;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 
+/**
+ * The DisplayScreen class is the class that extends the JPanel and all the graphics goes on it.
+ *
+ * @author Jasmine Ou and Laura Wong
+ * @version 1 05.15.15
+ * 
+ * <p>
+ * <b>name: DisplayScreen.java </b>
+ *
+ * <p>
+ * <b>Instance variables: </b>
+ */
 public class DisplayScreen extends JPanel 
 {
-  BufferedImage backgroundImage;
-  BufferedImage logo;
+  //BufferedImage backgroundImage;
+ // BufferedImage logo;
   
+  /**
+   * The DisplayScreen constructor is used to create the background image.
+   */
   public DisplayScreen()
   {
-    button();
-    repaint();
-  }
-  
-  @Override
-  public void paintComponent(Graphics g) 
-  {
-    try 
-    {
-      backgroundImage = ImageIO.read(new File("E:\\School\\2014-2015\\ICS4U\\final Project\\CookieByte Critter Sitter Software\\splashscreenbackground.jpg"));
-      //logo = ImageIO.read(new File("E:\\School\\2014-2015\\ICS4U\final Project\\CookieByte Critter Sitter Software\\character2.jpg"));
-    } 
-    catch (IOException e) 
-    {
-      e.printStackTrace();
-    }
-    
-    super.paintComponent(g);
-    Graphics2D g2d = (Graphics2D) g.create();
-    // g2d.setComposite(AlphaComposite.SrcOver.derive(alpha));
-    int x = (getWidth() - backgroundImage.getWidth()) / 2;
-    int y = (getHeight() - backgroundImage.getHeight()) / 2;
-    g2d.drawImage(backgroundImage, x, y, this);
-    
-    //g2d.setComposite(AlphaComposite.SrcOver.derive(1f - alpha));
-    x = (getWidth() - logo.getWidth()) / 2;
-    y = (getHeight() - logo.getHeight()) / 2;
-    g2d.drawImage(logo, 60, y, this);
-    g2d.dispose();
+    ImageIcon pic = new ImageIcon("CompanyNameSplashScreen.jpg");
+    JLabel background = new JLabel(pic);
+    this.add(background);
+   // button();
+    //repaint();
   }
   
   
