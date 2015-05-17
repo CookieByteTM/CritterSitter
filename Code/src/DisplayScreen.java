@@ -44,10 +44,21 @@ public class DisplayScreen extends JPanel
   {
     Image image = new ImageIcon ("CompanyNameSplashScreen.jpg").getImage();
     g.drawImage(image,2,2,this);  
+    
+//    Color lightBlue = new Color(51,174,210);
+//    g.setColor(lightBlue);
+//    g.fillRect(0,0,771,537);
+//    delay(200);
+
     move();   
     g.drawRect(x,y,100,100);
     delay(5);
     repaint();   
+    
+//        Color lightBlue = new Color(51,174,210);
+//    g.setColor(lightBlue);
+//    g.fillRect(0,0,771,537);
+//        delay(200);
   }
   
   public void move () 
