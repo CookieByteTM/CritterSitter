@@ -56,7 +56,7 @@ public class HighScores
 //  }
   
   /**
-   * The processAndUpdateScores method processes and updates the scores by sorting them.
+   * The updateScores method processes and updates the scores by sorting them.
    * 
    * <p>
    * <b>Local variables: </b>
@@ -72,7 +72,7 @@ public class HighScores
    * @param score This is the score that will be used for the highscorers (if in the top 10).
    * //exception IOException e an IOException.
    */
-  public void processAndUpdateScores (int score)
+  public void updateScores (int score)
   {
     int numScores = 1;
     String[] playerName = new String [11]; //ASSUMING IT IS TOP TEN SCORES

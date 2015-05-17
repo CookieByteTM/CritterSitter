@@ -19,7 +19,7 @@
 public class Doctor
 {
   String [] diseases;
-    boolean gavePrescription;
+  boolean gavePrescription;
   String [][]pharmacy;
   
   /**
