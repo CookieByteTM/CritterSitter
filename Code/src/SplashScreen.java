@@ -33,7 +33,7 @@ public class SplashScreen extends JPanel
   {
     CritterSitterApp.delay(delayNumber);
     move();  
-    repaint();
+    repaint(); 
   }
   
   public void theSplashScreen(Graphics g)

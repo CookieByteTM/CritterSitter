@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<drjava version="drjava-20140826-r5761">
+  <project autorefresh="false" build="bin/" root="src/" work="">
+    <createjar file=""/>
+    <source>
+      <file active="true" name="CritterSitterApp.java" package="" timestamp="18-May-2015 01:30:05">
+        <select from="1349" to="1349"/>
+        <scroll column="224" row="0"/>
+      </file>
+      <file name="GroceryStore.java" package="" timestamp="18-May-2015 01:21:50">
+        <select from="1349" to="1349"/>
+        <scroll column="224" row="0"/>
+      </file>
+      <file name="Critter.java" package="" timestamp="17-May-2015 15:16:42">
+        <select from="1349" to="1349"/>
+        <scroll column="224" row="0"/>
+      </file>
+      <file name="CritterSitter.java" package="" timestamp="17-May-2015 15:16:47">
+        <select from="1349" to="1349"/>
+        <scroll column="224" row="0"/>
+      </file>
+      <file name="Doctor.java" package="" timestamp="17-May-2015 15:16:58">
+        <select from="1349" to="1349"/>
+        <scroll column="224" row="0"/>
+      </file>
+      <file name="Food.java" package="" timestamp="17-May-2015 15:17:01">
+        <select from="1349" to="1349"/>
+        <scroll column="224" row="0"/>
+      </file>
+      <file name="HighScores.java" package="" timestamp="17-May-2015 15:17:13">
+        <select from="1349" to="1349"/>
+        <scroll column="224" row="0"/>
+      </file>
+      <file name="Pamphlet.java" package="" timestamp="17-May-2015 15:17:15">
+        <select from="1349" to="1349"/>
+        <scroll column="224" row="0"/>
+      </file>
+      <file name="Recreation.java" package="" timestamp="17-May-2015 15:17:17">
+        <select from="1349" to="1349"/>
+        <scroll column="224" row="0"/>
+      </file>
+      <file name="SplashScreen.java" package="" timestamp="17-May-2015 22:49:59">
+        <select from="1349" to="1349"/>
+        <scroll column="224" row="0"/>
+      </file>
+    </source>
+    <included/>
+    <excluded/>
+    <collapsed/>
+    <classpath/>
+    <breakpoints/>
+    <watches/>
+    <bookmarks/>
+    <preferences/>
+  </project>
+</drjava>
