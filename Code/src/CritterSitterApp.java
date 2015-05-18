@@ -16,7 +16,7 @@ import java.awt.*;
  * <p>
  * <b>myDialog </b> This JDialog variable is used to make the different dialog boxes.
  */
-public class CritterSitterApp extends JFrame implements ActionListener
+public class CritterSitterApp extends JFrame
 {
   JDialog myDialog;
   
@@ -26,7 +26,7 @@ public class CritterSitterApp extends JFrame implements ActionListener
   public CritterSitterApp()
   {
     super ("Critter Sitter");
-    setSize (780, 590);
+    setSize (778, 566);
     setVisible (true);
     setDefaultCloseOperation (JFrame.DISPOSE_ON_CLOSE);
     setResizable(false);
@@ -89,6 +89,18 @@ public class CritterSitterApp extends JFrame implements ActionListener
     myDialog.setLocationRelativeTo (this);
     myDialog.setVisible (true);
   }
+  
+  public static void delay(int delayNum)
+  {
+    try 
+    {
+      Thread.sleep (delayNum); 
+    } 
+    catch (Exception e) 
+    {
+    }
+  }
+
   
   /** Description of main(String [] args)
     * This method calls the CritterSitterApp constructor to

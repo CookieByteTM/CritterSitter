@@ -19,11 +19,9 @@ import java.awt.image.BufferedImage;
  */
 public class SplashScreen extends JPanel 
 {
-  Color lightBlue = new Color(51,174,210);
+  Color lightBlue = new Color(51, 174, 210);
   int x;
   int y;
-  int temp = 0;
-  String c = "";
   
   //@overide
   public void paintComponent(Graphics g)
@@ -31,15 +29,11 @@ public class SplashScreen extends JPanel
     theSplashScreen(g);
   }
   
-  public void delay(int delayNum)
+  public void animate (int delayNumber)
   {
-    try 
-    {
-      Thread.sleep (delayNum); 
-    } 
-    catch (Exception e) 
-    {
-    }
+    CritterSitterApp.delay(delayNumber);
+    move();  
+    repaint();
   }
   
   public void theSplashScreen(Graphics g)
@@ -48,40 +42,73 @@ public class SplashScreen extends JPanel
     {    
       Image image = new ImageIcon ("CompanyNameSplashScreen.jpg").getImage();
       g.drawImage(image, 0, 0,this);
-      move();   
-      delay(10);
-      repaint();
+      animate(10);
       g.dispose();
     }
     else
     {
       Image image2 = new ImageIcon ("MainMenuBackgroundBlue.jpg").getImage();
-      g.drawImage(image2, 0, 0,this);
-      // x = temp;
-      // y = temp;      
+      g.drawImage(image2, 0, 0,this);    
       if (x >= 200 && x < 550)
       {    
-        move();
         g.setColor (Color.RED);
         g.fillRect(200, y-200, 300, 150);
-        delay(2);
-        repaint();
+        animate(2);
       }
       else if (x >= 550 && x < 800)
       {
-        move();
         g.setColor (Color.RED);
         g.fillRect(200, (350 - (y-549)), 300, 150);
-        delay(2);
-        repaint();
+        animate(2);
       }
       else if (x >= 800 && x < 1050)
       {
-        move();
         g.setColor (Color.RED);
-        g.fillRect(200, (350 - (y-549)), 300, 150);
-        delay(2);
-        repaint();
+        g.fillRect(200, (99 + (y-799)), 300, 150);
+        animate(1);
+      }
+      else if (x >= 1050 && x < 1200)
+      {
+        g.setColor (Color.RED);
+        g.fillRect(200, (350 - (y-1049)), 300, 150);
+        animate(1);
+      }
+      else if (x >= 1200 && x < 1350)
+      {
+        g.setColor (Color.RED);
+        g.fillRect(200, (199 + (y-1199)), 300, 150);
+        animate(1);
+      }
+      else if (x >= 1350 && x < 1370)
+      {
+        g.setColor (Color.RED);
+        g.fillRect(200, (350 - (y-1349)), 300, 150);
+        animate(5);
+      }
+      else if (x >= 1370 && x < 1380)
+      {
+        g.setColor (Color.RED);
+        g.fillRect(200, (329 + (y-1369)), 300, 150);
+        animate(5);
+      }
+      else if(x >= 1380 && x < 1680)
+      {
+        g.setColor (Color.RED);
+        g.fillRect(200, 340 - (y-1379), 300, 150);
+        animate(10);
+      }
+      else
+      {
+        g.setColor (Color.RED);
+        g.fillRect(200, 39, 300, 150);
+        g.fillRect(300, 230, 170, 170);
+        if (x >= 1680 && x <1780)
+        {
+          g.setColor (Color.BLACK);
+          g.setFont (new Font ("Helvetica", Font.BOLD, 25));
+          g.drawString("Loading" + (x-1679) + "%", 270, 350);
+          animate(2);
+        }
       }
     }
   }

@@ -17,7 +17,7 @@ import java.awt.image.BufferedImage;
  * <p>
  * <b>Instance variables: </b>
  */
-public class DisplayScreen extends JPanel 
+public class SplashScreen extends JPanel 
 {
   Color lightBlue = new Color(51,174,210);
   int x;
@@ -28,8 +28,7 @@ public class DisplayScreen extends JPanel
   //@overide
   public void paintComponent(Graphics g)
   {
-    g.setColor(Color.RED);
-    g.fillRect(0,0,12,12);
+    theSplashScreen(g);
   }
   
   public void delay(int delayNum)
@@ -43,7 +42,7 @@ public class DisplayScreen extends JPanel
     }
   }
   
-  public void splashScreen(Graphics g)
+  public void theSplashScreen(Graphics g)
   {
     if (x <= 200)
     {    
