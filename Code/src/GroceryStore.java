@@ -35,10 +35,10 @@ public class GroceryStore extends JPanel implements MouseListener
    * make grid layout of food icons for MouseListener co-ords
    * new BG with food icons (photoshop)
    */
-  Food iceCream=new Food ("Ice cream", 3,"Dairy", 5, "icecream.jpg");
-  Food cookie=new Food ("Cookie", 1,"Carbohydrate", 3, "cookie.jpg");
+  Food iceCream=new Food ("Ice Cream", 3,"Dairy", 5, "icecream.png");
+  Food cookie=new Food ("Cookie", 1,"Carbohydrate", 3, "cookie.png");
   Food[] foodItem;
-  Food selectedItem=new Food ("Item Name", 0,"Dairy", 0, "blank.jpg");
+  Food selectedItem=new Food ("Item Name", 0,"Dairy", 0, "shoppingBasket.png");
   String[] foodPic;
   int total;
   JLabel itemName=new JLabel("hi");
@@ -73,10 +73,10 @@ public class GroceryStore extends JPanel implements MouseListener
     buyIt.setBounds(520,470,70,50);
     buyIt.setBackground(new Color(102,255,198));
     buyIt.addActionListener (new ActionListener ()
-                               {
+			       {
       public void actionPerformed (ActionEvent e)
       {
-        itemName.setText("Bought it");
+	itemName.setText("Bought it");
       }
     }
     );
@@ -84,10 +84,10 @@ public class GroceryStore extends JPanel implements MouseListener
     exit.setBounds(600,470,70,50);
     exit.setBackground(new Color(239,58,68));
     exit.addActionListener (new ActionListener ()
-                              {
+			      {
       public void actionPerformed (ActionEvent e)
       {
-        itemName.setText("exit");
+	itemName.setText("exit");
       }
     }
     );
