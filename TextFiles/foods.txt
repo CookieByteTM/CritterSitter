@@ -1,82 +1,300 @@
-FORMAT
-name
-price
-food group
-nutrient value
-icon
-
-FOOD COURT(12)
-Grilled Trout
-grilledTrout.png
 Breakfast Plate
+1
+food group
+2
+breakfastPlate
+Grilled Trout
+1
+food group
+2
+grilledTrout
 Lasagna
+1
+food group
+2
+lasagna
 Spaghetti
+1
+food group
+2
+spaghetti
 Steak
+1
+food group
+2
+steak
 Sandwich
+1
+food group
+2
+steak
 Sushi
+1
+food group
+2
+sushi
 Tomato Soup
+1
+food group
+2
+tomatoSoup
 Salad
+1
+food group
+2
+salad
 Hamburger
+1
+food group
+2
+hamburger
 Rice 
+1
+food group
+2
+rice
 Mushroom Soup
-
-
-SHELF(12)
+1
+food group
+2
+mushroomSoup
 Cookie
+1
+food group
+2
+cookie
 Croissant
+1
+food group
+2
+croissant
 Baguette
+1
+food group
+2
+baguette
 Pretzel
+1
+food group
+2
+pretzel
 Sliced Bread
+1
+food group
+2
+slicedBread
 Chocolate
+1
+food group
+2
+chocolate
 Doughnut
+1
+food group
+2
+doughnut
 Macaron
+1
+food group
+2
+macaron
 Peanut Butter
+1
+food group
+2
+peanutButter
 Blueberry Jam
+1
+food group
+2
+blueberryJam
 Potato Chips
+1
+food group
+2
+potatoChips
 Candy
-
-PRODUCE(12)
+1
+food group
+2
+candy
 Apple
+1
+food group
+2
+apple
 Banana
+1
+food group
+2
+banana
 Grapes
+1
+food group
+2
+grapes
 Mango
+1
+food group
+2
+mango
 Strawberry
+1
+food group
+2
+strawberry
 Mandarin Orange
+1
+food group
+2
+mandarinOrange
 Broccoli
+1
+food group
+2
+broccoli
 Carrot
+1
+food group
+2
+carrot
 Corn 
+1
+food group
+2
+corn
 Lettuce
+1
+food group
+2
+lettuce
 Potato
+1
+food group
+2
+potato
 Tomato
-
-ICE(12)
+1
+food group
+2
+tomato
 Dorada Fish
+1
+food group
+2
+doradaFish
 Salmon Steak
+1
+food group
+2
+salmonSteak
 Trout
+1
+food group
+2
+trout
 Oyster
+1
+food group
+2
+oyster
 Chicken
+1
+food group
+2
+chicken
 Salami
+1
+food group
+2
+salami
 Sausage
+1
+food group
+2
+sausage
 Octopus
+1
+food group
+2
+octopus
 Lobster
+1
+food group
+2
+lobster
 Shrimp
+1
+food group
+2
+shrimp
 Mussel
+1
+food group
+2
+mussel
 Bacon
-
-FREEZER(10)
+1
+food group
+2
+bacon
 Ice Cream
+1
+food group
+2
+icecream
 Chocolate Cake
+1
+food group
+2
+chocolateCake
 Pudding
+1
+food group
+2
+pudding
 Raspberry Cheesecake
+1
+food group
+2
+raspberryCheesecake
 Brie Cheese
+1
+food group
+2
+brieCheese
 Swiss Cheese
+1
+food group
+2
+swissCheese
 Pizza
+1
+food group
+2
+pizza
 Eggs
+1
+food group
+2
+eggs
 Milk
+1
+food group
+2
+milk
 Popsicle
-
-FOR OTHER PARTS OF THE GAME(4)
-Birthday Cake
-waterDispense
+1
+food group
+2
+popsicle
+Water
+1
+food group
+2
+water
+Water
+1
+food group
+2
 waterGlass
-blank
