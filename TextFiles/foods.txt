@@ -27,7 +27,7 @@ Sandwich
 1
 food group
 2
-steak
+sandwich
 Sushi
 1
 food group

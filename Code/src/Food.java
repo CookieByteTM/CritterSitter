@@ -22,8 +22,8 @@
  */
 public class Food
 {
-  private String name, foodGroup, icon;
-  private int price, nutrientValue;
+  private String name, price,foodGroup, icon;
+  private int nutrientValue;
   
   
   /**
@@ -35,7 +35,7 @@ public class Food
    * @param price This is an int variable for the price of the food.
    * @param nutrientValue This is an int variable for the number of nutrient values for this food.
    */
-  public Food (String name, int price, String foodGroup, int nutrientValue, String icon)
+  public Food (String name, String price, String foodGroup, int nutrientValue, String icon)
   {
     this.name = name;
     this.price = price;
@@ -59,7 +59,7 @@ public class Food
    * 
    * @return price which is the int value of the price of the food.
    */
-  public int getPrice ()
+  public String getPrice ()
   {
     return price;
   }
