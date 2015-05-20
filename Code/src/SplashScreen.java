@@ -26,7 +26,14 @@ public class SplashScreen extends JPanel
   //@overide
   public void paintComponent(Graphics g)
   {
-    theSplashScreen(g);
+    if (x != -1)
+    {
+      theSplashScreen(g);
+    }
+    if (x ==-1)
+    {
+     System.out.println("Please work"); 
+    }
   }
   
   public void animate (int delayNumber)
@@ -45,7 +52,7 @@ public class SplashScreen extends JPanel
       animate(10);
       g.dispose();
     }
-    else
+    else //if (x >= 200 && x <= 1780)
     {
       Image image2 = new ImageIcon ("MainMenuBackgroundBlue.jpg").getImage();
       g.drawImage(image2, 0, 0,this);    
@@ -105,52 +112,56 @@ public class SplashScreen extends JPanel
 	{
 	  g.setColor (Color.BLACK);
 	  g.setFont (new Font ("Calibri", Font.BOLD, 35));
-	  g.drawString("Loading " + (x-1679) + " %", 305, 460);
+	  g.drawString("Loading " + (x-1679) + " %", 285, 460);
 	  animate(2);
 	}
 	if (x >= 1680 && x < 1694)
-	    {
-	      Image cookie1 = new ImageIcon ("cookie1box.jpg").getImage();
-	      g.drawImage(cookie1, 285, 230,this);     
-	      animate(50);
-	    }
-	  else if (x >= 1694 && x < 1708)
+	{
+	  Image cookie1 = new ImageIcon ("cookie1box.jpg").getImage();
+	  g.drawImage(cookie1, 285, 230,this);     
+	  animate(50);
+	}
+	else if (x >= 1694 && x < 1708)
+	{
+	  Image cookie2= new ImageIcon ("cookie2box.jpg").getImage();
+	  g.drawImage(cookie2, 285, 230,this);      
+	  animate(50);
+	}
+	else if (x >= 1708 && x < 1722)
+	{
+	  Image cookie3 = new ImageIcon ("cookie3box.jpg").getImage();
+	  g.drawImage(cookie3, 285, 230,this); 
+	  animate(100);
+	}
+	else if (x >= 1722 && x < 1736)
+	{
+	  Image cookie4= new ImageIcon ("cookie4box.jpg").getImage();
+	  g.drawImage(cookie4, 285, 230,this);     
+	  animate(100);
+	}       
+	else if (x >= 1736 && x < 1750)
+	{
+	  Image cookie5 = new ImageIcon ("cookie5box.jpg").getImage();
+	  g.drawImage(cookie5, 285, 230,this);    
+	  animate(100);
+	}
+	else if (x >= 1750 && x < 1764)
+	{
+	  Image cookie6= new ImageIcon ("cookie6box.jpg").getImage();
+	  g.drawImage(cookie6, 285, 230,this);     
+	  animate(100);
+	}   
+	else 
+	  if (x >= 1764 && x < 1780)
+	{
+	  Image cookie7 = new ImageIcon ("cookie7box.jpg").getImage();
+	  g.drawImage(cookie7, 285, 230,this);        
+	  animate(100);
+	  if (x == 1779)
 	  {
-	    Image cookie2= new ImageIcon ("cookie2box.jpg").getImage();
-	    g.drawImage(cookie2, 285, 230,this);      
-	    animate(50);
+	    x = -1;
 	  }
-	  else if (x >= 1708 && x < 1722)
-	  {
-	    Image cookie3 = new ImageIcon ("cookie3box.jpg").getImage();
-	    g.drawImage(cookie3, 285, 230,this); 
-	    animate(100);
-	  }
-	  else if (x >= 1722 && x < 1736)
-	  {
-	    Image cookie4= new ImageIcon ("cookie4box.jpg").getImage();
-	    g.drawImage(cookie4, 285, 230,this);     
-	    animate(100);
-	  }       
-	  else if (x >= 1736 && x < 1750)
-	  {
-	    Image cookie5 = new ImageIcon ("cookie5box.jpg").getImage();
-	    g.drawImage(cookie5, 285, 230,this);    
-	    animate(100);
-	  }
-	  else if (x >= 1750 && x < 1764)
-	  {
-	    Image cookie6= new ImageIcon ("cookie6box.jpg").getImage();
-	    g.drawImage(cookie6, 285, 230,this);     
-	    animate(100);
-	  }   
-	  else
-	    if (x >= 1764 && x < 1780)
-	  {
-	    Image cookie7 = new ImageIcon ("cookie7box.jpg").getImage();
-	    g.drawImage(cookie7, 285, 230,this);        
-	    animate(100);
-	  }
+	}
       }
     }
   }
@@ -160,20 +171,5 @@ public class SplashScreen extends JPanel
     x += 1;
     y += 1;
   } // end method move
-  
-  
-  public void button()
-  {
-    JButton calculate = new JButton ("Calculate");
-    add (calculate);
-    calculate.addActionListener (new ActionListener ()
-				   {
-      public void actionPerformed (ActionEvent e)
-      {
-	System.out.println ("YESSS!");
-      }
-    }
-    );
-  }
 }
 
