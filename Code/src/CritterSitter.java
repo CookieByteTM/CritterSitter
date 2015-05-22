@@ -2,7 +2,7 @@
  * The CritterSitter class is the class that creates the critter sitter (or the user in this case) who will take care of the critter.
  *
  * @author Jasmine Ou and Laura Wong
- * @version 1 05.15.15
+ * @version 2 05.22.15
  * 
  * <p>
  * <b>name: CritterSitterApp.java </b>
