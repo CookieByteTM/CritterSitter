@@ -158,11 +158,6 @@ Carrot
 food group
 2
 carrot
-Corn 
-1
-food group
-2
-corn
 Lettuce
 1
 food group
@@ -178,6 +173,11 @@ Tomato
 food group
 2
 tomato
+Corn 
+1
+food group
+2
+corn
 Dorada Fish
 1
 food group
@@ -258,6 +258,21 @@ Raspberry Cheesecake
 food group
 2
 raspberryCheesecake
+Popsicle
+1
+food group
+2
+popsicle
+Yogurt
+1
+food group
+2
+yogurt
+Pizza
+1
+food group
+2
+pizza
 Brie Cheese
 1
 food group
@@ -268,11 +283,6 @@ Swiss Cheese
 food group
 2
 swissCheese
-Pizza
-1
-food group
-2
-pizza
 Eggs
 1
 food group
@@ -283,18 +293,8 @@ Milk
 food group
 2
 milk
-Popsicle
-1
-food group
-2
-popsicle
 Water
 1
 food group
 2
 water
-Water
-1
-food group
-2
-waterGlass
