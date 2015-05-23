@@ -77,7 +77,7 @@ public class SplashScreen extends JPanel
    */
   public void theSplashScreen(Graphics g)
   {
-    Image gameName = new ImageIcon ("name.jpg").getImage();
+    Image gameName = new ImageIcon ("SplashScreenGameName.jpg").getImage();
     if (x <= 200)
     {    
       Image image = new ImageIcon ("CompanyNameSplashScreen.jpg").getImage();
@@ -91,47 +91,47 @@ public class SplashScreen extends JPanel
       g.drawImage(image2, 0, 0,this);    
       if (x >= 200 && x < 550)
       {    
-      g.drawImage(gameName, 200, y-200, this);
+      g.drawImage(gameName, 185, y-200, this);
         animate(2);
       }
       else if (x >= 550 && x < 800)
       {
-      g.drawImage(gameName, 200, (350 - (y-549)), this);
+      g.drawImage(gameName, 185, (350 - (y-549)), this);
         animate(2);
       }
       else if (x >= 800 && x < 1050)
       {
-      g.drawImage(gameName, 200, (99 + (y-799)), this);
+      g.drawImage(gameName, 185, (99 + (y-799)), this);
         animate(1);
       }
       else if (x >= 1050 && x < 1200)
       {
-      g.drawImage(gameName, 200, (350 - (y-1049)), this);
+      g.drawImage(gameName, 185, (350 - (y-1049)), this);
         animate(1);
       }
       else if (x >= 1200 && x < 1350)
       {
-      g.drawImage(gameName, 200, (199 + (y-1199)), this);
+      g.drawImage(gameName, 185, (199 + (y-1199)), this);
         animate(1);
       }
       else if (x >= 1350 && x < 1370)
       {
-      g.drawImage(gameName, 200, (350 - (y-1349)), this);
+      g.drawImage(gameName, 185, (350 - (y-1349)), this);
         animate(5);
       }
       else if (x >= 1370 && x < 1380)
       {
-      g.drawImage(gameName, 200, (329 + (y-1369)), this);
+      g.drawImage(gameName, 185, (329 + (y-1369)), this);
         animate(5);
       }
       else if(x >= 1380 && x < 1680)
       {
-      g.drawImage(gameName, 200, 340 - (y-1379), this);
+      g.drawImage(gameName, 185, 340 - (y-1379), this);
         animate(5);
       }
       else
       {
-      g.drawImage(gameName, 200, 39, this);
+      g.drawImage(gameName, 185, 39, this);
         if (x >= 1680 && x <1780)
         {
           g.setColor (Color.BLACK);
