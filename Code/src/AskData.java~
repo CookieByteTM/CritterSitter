@@ -13,8 +13,13 @@ import java.awt.image.BufferedImage;
  * 
  * <p>
  * <b>name: askName.java </b>
+ * 
+ * <p>
+ * <b>Instance Variables: </b>
+ * <p>
+ * <b>name </b>This is the string variable to store the user's name.
  */
-public class AskName extends JPanel 
+public class AskData extends JPanel 
 {
   String name = "";
   /**
@@ -52,8 +57,10 @@ public class AskName extends JPanel
    * <b>insets </b> This is the inset variable for positioning the buttons and label.
    * <p>
    * <b>size </b> This is the dimension variable for positioning and getting the size of the buttons and the label.
+   * <p>
+   * <b>difficultyLabel </b> This is the difficulty label that is used for telling the user to choose their difficulty level.
    */
-  public AskName()
+  public AskData()
   {
     setLayout(null);
     Insets insets = getInsets();
@@ -86,11 +93,41 @@ public class AskName extends JPanel
     }
     );  
     
-    JLabel difficultyField = new JLabel ("Please choose the difficulty (the number of virtual days: ");
-    difficultyField.setFont (new Font ("Serif", Font.PLAIN, 15));
-    size = difficultyField.getPreferredSize();
-    difficultyField.setBounds (25 + insets.left, 140 + insets.top, size.width, size.height);
+    JLabel difficultyLabel = new JLabel ("Please choose the difficulty (the number of virtual days: ");
+    difficultyLabel.setFont (new Font ("Serif", Font.PLAIN, 15));
+    size = difficultyLabel.getPreferredSize();
+    difficultyLabel.setBounds (25 + insets.left, 180 + insets.top, size.width, size.height);
+    add(difficultyLabel);
     //https://docs.oracle.com/javase/tutorial/uiswing/components/slider.html
+    
+ 
+        //Create the slider.
+        JSlider mySlider = new JSlider(JSlider.HORIZONTAL);
+         add(mySlider);
+    
+//    
+//    
+//     //Create the label.
+//JLabel sliderLabel = new JLabel("Frames Per Second", JLabel.CENTER);
+//        add(sliderLabel);
+// 
+//        //Create the slider.
+//        JSlider framesPerSecond = new JSlider(JSlider.HORIZONTAL,
+//                                              FPS_MIN, FPS_MAX, FPS_INIT);
+//         
+// 
+//        framesPerSecond.addChangeListener(this);
+// 
+//        //Turn on labels at major tick marks.
+// 
+//        framesPerSecond.setMajorTickSpacing(10);
+//        framesPerSecond.setMinorTickSpacing(1);
+//        framesPerSecond.setPaintTicks(true);
+//        framesPerSecond.setPaintLabels(true);
+//        framesPerSecond.setBorder(
+//                BorderFactory.createEmptyBorder(0,0,10,0));
+//        Font font = new Font("Serif", Font.ITALIC, 15);
+//        framesPerSecond.setFont(font);
   }
 }
 

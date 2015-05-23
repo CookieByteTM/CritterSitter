@@ -7,7 +7,7 @@ import java.awt.event.*;
  * In each case different windows or screens will appear asking for user input to continue back to the main menu or throughout the game.
  * 
  * @author Jasmine Ou and Laura Wong
- * @version 2 05.22.15
+ * @version 3 05.29.15
  * 
  * <p>
  * <b>name: MainMenu.java </b>

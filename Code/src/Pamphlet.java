@@ -4,7 +4,7 @@
  * critter the user has, the genetic diseases it is prone to, and how to sustain a healthy diet.
  *
  * @author Jasmine Ou and Laura Wong
- * @version 2 05.22.15
+ * @version 3 05.29.15
  * 
  * <p>
  * <b>name: Pamphlet.java </b>

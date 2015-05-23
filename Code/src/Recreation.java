@@ -6,7 +6,7 @@
  * the critter DOES return with the object.
  *
  * @author Jasmine Ou and Laura Wong
- * @version 2 05.22.15
+ * @version 3 05.29.15
  * 
  * <p>
  * <b>name: Recreation.java </b>

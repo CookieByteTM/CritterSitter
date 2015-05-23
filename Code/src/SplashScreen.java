@@ -9,7 +9,7 @@ import java.awt.image.BufferedImage;
  * The DisplayScreen class is the class that extends the JPanel and all the graphics goes on it.
  *
  * @author Jasmine Ou and Laura Wong
- * @version 2 05.22.15
+ * @version 3 05.29.15
  * 
  * <p>
  * <b>name: DisplayScreen.java </b>

@@ -2,7 +2,7 @@
  * The Critter class is the class that creates the actual critter.
  *
  * @author Jasmine Ou and Laura Wong
- * @version 1 05.15.15
+ * @version 2 05.22.15
  * 
  * <p>
  * <b>name: Critter.java </b>

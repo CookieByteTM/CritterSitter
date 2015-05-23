@@ -4,7 +4,7 @@ import java.io.*;
  * of the top 10 games won on an output file.
  *
  * @author Jasmine Ou and Laura Wong
- * @version 2 05.22.15
+ * @version 3 05.29.15
  * 
  * <p>
  * <b>name: HighScores.java </b>
