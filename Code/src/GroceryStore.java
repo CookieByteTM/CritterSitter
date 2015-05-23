@@ -11,7 +11,7 @@ import javax.swing.event.*;
  * and feed their critter.
  *
  * @author Jasmine Ou and Laura Wong
- * @version 2 05.21.15
+ * @version 3 05.29.15
  * 
  * <p>
  * <b>name: GroceryStore.java </b>
@@ -71,30 +71,30 @@ public class GroceryStore extends JPanel implements MouseListener
     buyIt.setBackground(new Color(102,255,198));
     buyIt.setEnabled(false);
     buyIt.addActionListener (new ActionListener ()
-                               {
+			       {
       public void actionPerformed (ActionEvent e)
       {
-        if (quantity<=CritterSitterApp.home.getFridgeSpace()&&calcTotal()<=CritterSitterApp.home.getPoints())
-        {
-          confirmPurchase();
-          if (confirmPurchaseDialog==0)
-          {
-            CritterSitterApp.home.addFood(selectedItem,quantity);
-          }
-        }
-        else
-          errorMessage();
+	if (quantity<=CritterSitterApp.home.getFridgeSpace()&&calcTotal()<=CritterSitterApp.home.getPoints())
+	{
+	  confirmPurchase();
+	  if (confirmPurchaseDialog==0)
+	  {
+	    CritterSitterApp.home.addFood(selectedItem,quantity);
+	  }
+	}
+	else
+	  errorMessage();
       }
     }
     );
     
     spinner.setBounds(542,474,58,24);
     spinner.addChangeListener(new ChangeListener() 
-                                {
+				{
       public void stateChanged(ChangeEvent e) 
       {
-        quantity=(int)spinner.getValue();
-        totalPrice.setText("$"+calcTotal());
+	quantity=(int)spinner.getValue();
+	totalPrice.setText("$"+calcTotal());
       }
     });
     
@@ -143,15 +143,15 @@ public class GroceryStore extends JPanel implements MouseListener
       in=new BufferedReader(new FileReader("foods.txt"));
       for (int x=0;x<5;x++)
       {
-        for (int y=0;y<12;y++)
-        {
-          name=in.readLine();
-          price=in.readLine();
-          foodGroup=in.readLine();
-          nutrientValue=Integer.parseInt(in.readLine());
-          icon=in.readLine()+".png";
-          foodItem[x][y]=new Food (name,price,foodGroup,nutrientValue,icon);
-        }
+	for (int y=0;y<12;y++)
+	{
+	  name=in.readLine();
+	  price=in.readLine();
+	  foodGroup=in.readLine();
+	  nutrientValue=Integer.parseInt(in.readLine());
+	  icon=in.readLine()+".png";
+	  foodItem[x][y]=new Food (name,price,foodGroup,nutrientValue,icon);
+	}
       } 
     }
     catch (IOException e)
@@ -172,13 +172,13 @@ public class GroceryStore extends JPanel implements MouseListener
   {
     Object[] options = {"Confirm Purchase","Cancel"};
     confirmPurchaseDialog = JOptionPane.showOptionDialog(this, "Are you sure of your purchase?\n"+selectedItem.getName()
-                                                           +".........."+spinner.getValue()+"\n"+"Points to Spend.........."+calcTotal(),                                   
-                                                         "Confirm Purchase",
-                                                         JOptionPane.YES_NO_OPTION,
-                                                         JOptionPane.QUESTION_MESSAGE,
-                                                         new ImageIcon(selectedItem.getIcon()),    
-                                                         options, 
-                                                         options[0]);
+							   +".........."+spinner.getValue()+"\n"+"Points to Spend.........."+calcTotal(),                                   
+							 "Confirm Purchase",
+							 JOptionPane.YES_NO_OPTION,
+							 JOptionPane.QUESTION_MESSAGE,
+							 new ImageIcon(selectedItem.getIcon()),    
+							 options, 
+							 options[0]);
   }
   
   public void errorMessage()
@@ -260,23 +260,23 @@ public class GroceryStore extends JPanel implements MouseListener
     {
       if (correctRow(e.getY(),row+15))
       {
-        for (int col=0; col<=(foodItem[row/90].length+1)*63; col+=63)
-        {
-          if (correctCol(e.getX(),col+8))
-          {
-            selectedItem=foodItem[row/90][col/63];
-            totalPrice.setText("$"+calcTotal());
-            buyIt.setEnabled(true);
-            break;
-          }
-        }
-        break;
+	for (int col=0; col<=(foodItem[row/90].length+1)*63; col+=63)
+	{
+	  if (correctCol(e.getX(),col+8))
+	  {
+	    selectedItem=foodItem[row/90][col/63];
+	    totalPrice.setText("$"+calcTotal());
+	    buyIt.setEnabled(true);
+	    break;
+	  }
+	}
+	break;
       }
       else
       {
-        selectedItem=blank;
-        buyIt.setEnabled(false);
-        totalPrice.setText("");
+	selectedItem=blank;
+	buyIt.setEnabled(false);
+	totalPrice.setText("");
       }
     }
     repaint();

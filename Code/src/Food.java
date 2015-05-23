@@ -2,7 +2,7 @@
  * The Food class is the class that makes each individiual food, assigns the name, price, food group, nutrient value and icon.
  *
  * @author Jasmine Ou and Laura Wong
- * @version 2 05.21.15
+ * @version 3 05.29.15
  * 
  * <p>
  * <b>name: Food.java </b>
