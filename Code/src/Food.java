@@ -44,7 +44,7 @@ public class Food
   }
   
   /**
-   * The Food constructor makes the new food object with the designated name, price and image.
+   * The Food constructor makes the new Food object with the designated name, price and image.
    * 
    * @param name This is a String variable for the food's name.
    * @param price This is an String variable for the price of the food.
@@ -55,6 +55,13 @@ public class Food
     this.name = name;
     this.price = price;
     this.icon = icon; 
+  }
+  
+  /**
+   * The Food constructor makes the new Food object.
+   */
+  public Food()
+  {
   }
   
   /**

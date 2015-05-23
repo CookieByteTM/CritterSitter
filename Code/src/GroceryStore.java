@@ -5,6 +5,7 @@ import java.io.*;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.awt.Component;
+import javax.swing.event.*;
 /**
  * The GroceryStore class is the class that has the grocery store and has different foods for the user to buy
  * and feed their critter.
@@ -27,27 +28,29 @@ import java.awt.Component;
  * <b>itemName</b> Creates an instance of the JLabel class with the String title "Item Name" to display the selected item's name.
  * <p>
  * <b>itemPrice</b> Creates an instance of the JLabel class with the String title "Price" to display the selected item's price.
- * <b>
- * <p>buyIt</b> Creates an instance of the JButton class with the String title "BUY".
- * <b>
- * <p>exit</b> Creates an instance of the JButton class with the String title "EXIT".
- * <b>
- * <p>spinnerModel</b> A Spinner Model that creates an instance of the SpinneNumberModel class with a minimum of 1, incrementation of 1 and maximum of 10.
- * <b>
- * <p>spinner</b> Creates an instance of the JSpinner class using the spinnerModel to let the user select the quantity of an item.
+ * <p>
+ * <b>buyIt</b> Creates an instance of the JButton class with the String title "BUY".
+ * <p>
+ * <b>exit</b> Creates an instance of the JButton class with the String title "EXIT".
+ * <p>
+ * <b>spinnerModel</b> A Spinner Model that creates an instance of the SpinneNumberModel class with a minimum of 1, incrementation of 1 and maximum of 10.
+ * <p>
+ * <b>spinner</b> Creates an instance of the JSpinner class using the spinnerModel to let the user select the quantity of an item.
  */
 public class GroceryStore extends JPanel implements MouseListener
 {
-  
   Food[][] foodItem=new Food[5][12];
-  Food blank=new Food ("Item Name", "Price","shoppingBasket.png");
+  Food blank=new Food ("Item Name", "0","shoppingBasket.png");
   Food selectedItem=blank;
   JLabel itemName=new JLabel("Item Name");
-  JLabel itemPrice=new JLabel("0");
+  JLabel itemPrice=new JLabel("$0");
+  JLabel numPoints=new JLabel (""+CritterSitterApp.home.getPoints());
+  JLabel totalPrice=new JLabel ("$0");
   JButton buyIt=new JButton("BUY");
-  JButton exit=new JButton ("EXIT");
   SpinnerModel spinnerModel = new SpinnerNumberModel(1,1,10,1);
   JSpinner spinner = new JSpinner(spinnerModel);
+  int confirmPurchaseDialog;
+  int quantity=1;
   
   /**
    * The GroceryStore constructor adds a MouseListener to the JPanel, sets the Layout to null, sets the location of all the two JButtons, two JLabels and JSpinner. 
@@ -59,38 +62,49 @@ public class GroceryStore extends JPanel implements MouseListener
     addMouseListener(this);
     setLayout(null);
     
-    itemName.setBounds(20,435,100,100);
-    itemPrice.setBounds(400,435,100,100);
+    itemName.setBounds(300,436,300,100);
+    itemPrice.setBounds(459,436,100,100);
+    totalPrice.setBounds(544,465,100,100);
+    numPoints.setBounds(394,465,100,100);
     
-    buyIt.setBounds(520,470,70,50);
+    buyIt.setBounds(612,473,70,50);
     buyIt.setBackground(new Color(102,255,198));
+    buyIt.setEnabled(false);
     buyIt.addActionListener (new ActionListener ()
                                {
       public void actionPerformed (ActionEvent e)
       {
-        itemName.setText("Bought it");
+        if (quantity<=CritterSitterApp.home.getFridgeSpace()&&calcTotal()<=CritterSitterApp.home.getPoints())
+        {
+          confirmPurchase();
+          if (confirmPurchaseDialog==0)
+          {
+            CritterSitterApp.home.addFood(selectedItem,quantity);
+          }
+        }
+        else
+          errorMessage();
       }
     }
     );
     
-    exit.setBounds(600,470,70,50);
-    exit.setBackground(new Color(239,58,68));
-    exit.addActionListener (new ActionListener ()
-                              {
-      public void actionPerformed (ActionEvent e)
+    spinner.setBounds(542,474,58,24);
+    spinner.addChangeListener(new ChangeListener() 
+                                {
+      public void stateChanged(ChangeEvent e) 
       {
-        itemName.setText("exit");
+        quantity=(int)spinner.getValue();
+        totalPrice.setText("$"+calcTotal());
       }
-    }
-    );
+    });
     
-    spinner.setBounds(442,473,58,24);
-    
-    add(spinner);
     add(itemName);
     add(itemPrice);
+    add(totalPrice);
+    add(numPoints);
     add(buyIt);
-    add(exit);
+    add(spinner);
+    
     stockStore();
   }
   
@@ -118,8 +132,6 @@ public class GroceryStore extends JPanel implements MouseListener
    * <b> x </b> An int loop variable that starts from 0 and increments by 1 while x is smaller than 5 for as the row number in the 2D array foodItems.
    * <p>
    * <b> y </b> An int loop variable that starts from 0 and increments by 1 while y is smaller than 12 for as the column number in the 2D array foodItems.
-   * 
-   * @exception IOException if stream to foods.txt cannot be written to or closed.
    */
   public void stockStore()
   {
@@ -148,45 +160,49 @@ public class GroceryStore extends JPanel implements MouseListener
   }
   
   /**
-   * The displaySelectedItem method displays the name and price of the food the user has chosen by setting text to the itemName and itemPrice JLabels.
+   * The confirmPurchase method creates and displays a JOptionPane to ask the user to confirm their purchase
+   * <p>
+   * <b>Local Variable Dictionary: </b>
+   * <p>
+   * <b> options[] </b> Object of the options of the confirmPurchaseDialog.
+   * <p>
+   * <b> confirmPurchaseDialog </b> The JOptionPane OptionDialog to ask the user to confirm their purchase.
    */
-  public void displaySelectedItem ()
+  public void confirmPurchase()
   {
-    itemName.setText(selectedItem.getName());
-    itemPrice.setText(selectedItem.getPrice());
-    //itemPrice.setText(spinner.getValue()+"");
+    Object[] options = {"Confirm Purchase","Cancel"};
+    confirmPurchaseDialog = JOptionPane.showOptionDialog(this, "Are you sure of your purchase?\n"+selectedItem.getName()
+                                                           +".........."+spinner.getValue()+"\n"+"Points to Spend.........."+calcTotal(),                                   
+                                                         "Confirm Purchase",
+                                                         JOptionPane.YES_NO_OPTION,
+                                                         JOptionPane.QUESTION_MESSAGE,
+                                                         new ImageIcon(selectedItem.getIcon()),    
+                                                         options, 
+                                                         options[0]);
   }
   
-  /**
-   * The checkOut method is used to add the food the user has chosen to their fridge and decrement the points the CritterSitter has.
-   */
-  public void checkOut ()
+  public void errorMessage()
   {
-    /*decrement CritterSitter points and add food to fridge*/
-  }
-  
-  /**
-   * The exit method is used to exit the grocery store.
-   */
-  public void exit ()
-  {
+    String message="";
+    if (quantity>CritterSitterApp.home.getFridgeSpace())
+    {
+      message="You do not have enough space in your fridge.\n";
+    }
+    if(calcTotal()>CritterSitterApp.home.getPoints())
+    {
+      message+="You do not have enough points.";
+    }
+    JOptionPane.showMessageDialog(this, message);
   }
   
   /**
    * The calcTotal method is used to calculate the total number of points the user needs to pay for each purchase of one type of item.
    * 
-   * <p>
-   * <b>Local Variables: </b>
-   * <p>
-   * <b>total </b> int that stores how much the user needs to pay for each purchase of one type of item.
-   * 
    * @returns int of the total number of points the user needs to pay for each purchase of one type of item.
    */
   private int calcTotal ()
   {
-    int total = 0;
-    /*with quantity*/
-    return total;
+    return Integer.parseInt(selectedItem.getPrice())*quantity;
   } 
   
   /**
@@ -204,7 +220,6 @@ public class GroceryStore extends JPanel implements MouseListener
     return false;
   }
   
-  
   /**
    * The correctCol method is used to determine whether the user clicked in the column specified in the parameters or not.
    * The if statement checks if the user clicked within the 60 by 60 square of a food icon starting from the indicated left most pixel.
@@ -213,13 +228,12 @@ public class GroceryStore extends JPanel implements MouseListener
    * @param clickX int of the x coordinate of the user's mouse click.
    * @param iconX int of an icon's left most x coordinate.
    */
-  private boolean correctCol(int clickX, int iconX)
+  public static boolean correctCol(int clickX, int iconX)
   {
     if (clickX>=iconX&&clickX<=iconX+60)
       return true;
     return false;
   }
-  
   
   /**
    * The mouseClicked method coordinates the proper response to the user's mouse clicks. 
@@ -251,6 +265,8 @@ public class GroceryStore extends JPanel implements MouseListener
           if (correctCol(e.getX(),col+8))
           {
             selectedItem=foodItem[row/90][col/63];
+            totalPrice.setText("$"+calcTotal());
+            buyIt.setEnabled(true);
             break;
           }
         }
@@ -259,38 +275,44 @@ public class GroceryStore extends JPanel implements MouseListener
       else
       {
         selectedItem=blank;
+        buyIt.setEnabled(false);
+        totalPrice.setText("");
       }
     }
     repaint();
-    displaySelectedItem();
+    itemName.setText(selectedItem.getName());
+    itemPrice.setText("$"+selectedItem.getPrice());
   }
+  
   /**
    * The mousePressed method listens for a mouse press.
    * @param e MouseEvent that stores the user's mouse actions.
-  */
+   */
   @Override
   public void mousePressed(MouseEvent e) {}
   
   /**
    * The mouseEntered method listens for a mouse enter.
    * @param e MouseEvent that stores the user's mouse actions.
-  */
+   */
   @Override
   public void mouseEntered(MouseEvent e) {}
   
   /**
    * The mouseExited method listens for a mouse exit.
    * @param e MouseEvent that stores the user's mouse actions.
-  */
+   */
   @Override
   public void mouseExited(MouseEvent e) {}
   
   /**
    * The mouseReleased method listens for a mouse release.
    * @param e MouseEvent that stores the user's mouse actions.
-  */
+   */
   @Override
-  public void mouseReleased(MouseEvent e) {}
+  public void mouseReleased(MouseEvent e) 
+  {
+  }
   
   /**
    * Overrided paintComponent method of the Graphics class to draw background and food icons on to the JPanel. The pictures include the store's background and the food icons.
@@ -299,8 +321,6 @@ public class GroceryStore extends JPanel implements MouseListener
    * <b>Local Variable Dictionary: </b>
    * <p>
    * <b> bg </b> An Image the creates an instance of the ImageIcon class that stores the store's background image.
-   * <p>
-   * <b> foodIcon </b> An Image the creates an instance of the ImageIcon class that stores the selectedItem's corresponding food icon.
    * 
    * @param g An instance of the Graphics class.
    */
@@ -309,7 +329,6 @@ public class GroceryStore extends JPanel implements MouseListener
   {
     Image bg = new ImageIcon ("GroceryStoreBG.jpg").getImage();
     g.drawImage(bg, 0, 0,this);
-    Image foodIcon = new ImageIcon (selectedItem.getIcon()).getImage();
-    g.drawImage(foodIcon, 701, 467,this);
+    g.drawImage(new ImageIcon(selectedItem.getIcon()).getImage(), 701, 467,this);
   } 
 }
