@@ -32,37 +32,68 @@ import java.util.*;
  * <p>
  * <b>day </b> This int variable is used to store the number of the virtual day.
  */
-public class CritterHome extends JPanel implements MouseListener
+public class CritterHome extends JPanel implements MouseListener, MouseMotionListener
 {
   private String userName;
   private int points;
   private int difficulty;
-  private int critterCharacter;
+  private String critterColour;
   private ArrayList<Food>fridge=new ArrayList<Food>();
+  private ArrayList<Food>stomach=new ArrayList<Food>();
   private Food selectedItem=new Food();
   private double hour;
   private int day;
-  int handleFoodDialog;
+  private int fridgeDialog;
+  private int leaveDialog;
+  private int selectedIndex;
+  JButton storeButton;
+  JButton recButton=new JButton("Play Outside");
+  JButton menuButton=new JButton("Main Menu");
+  JButton docButton=new JButton("Doctor");
+  JButton infoButton=new JButton("Pamphlet");
+  boolean hoverDoor, hoverCritter; 
+  Critter myCritter;
   
   /**
    * The CritterHome constructor creates a critter sitter with the specified name, difficulty and character.
    * 
    * @param userName This String variable is used to save the user's name. 
    * @param difficulty This int variable is used to store the user's difficulty level.
-   * @param critterCharacter This int variable is used to sstore the character number of the critter.
+   * @param critterColour This String variable is used to store the critter's colour.
    */
-  public CritterHome (String userName, int difficulty, int critterCharacter)
+  public CritterHome (String userName, int difficulty, String critterColour)
   {
+    addMouseListener(this);
+    addMouseMotionListener(this);
+    setLayout(null);
     
     this.userName = userName;
     this.difficulty = difficulty;
-    this.critterCharacter = critterCharacter;
+    this.critterColour = critterColour;
+    storeButton=new JButton("Grocery Store");
+    myCritter=new Critter(critterColour);
   }
   
   public CritterHome()
   {
     addMouseListener(this);
+    addMouseMotionListener(this);
     setLayout(null);
+  }
+  
+  public void setButtonsActionListener(ActionListener al)
+  {
+    storeButton.addActionListener(al);
+    recButton.addActionListener(al);
+    menuButton.addActionListener(al);
+    docButton.addActionListener(al);
+    infoButton.addActionListener(al);
+    
+    storeButton.setActionCommand("Store");
+    recButton.setActionCommand("Recreation");
+    menuButton.setActionCommand("Menu");
+    docButton.setActionCommand("Doctor");
+    infoButton.setActionCommand("Pamphlet");
   }
   
   public void addFood(Food food,int quantity)
@@ -100,13 +131,13 @@ public class CritterHome extends JPanel implements MouseListener
   }
   
   /**
-   * The getCritterCharacter method gets the user's critterCharacter.
+   * The getCritterCharacter method gets the critter's colour
    * 
-   * @return critterCharacter the int variable of the user's critterCharacter.
+   * @return critterCharacter the String variable of the critter's colour
    */
-  public int getCritterCharacter ()
+  public String getCritterColour ()
   {
-    return critterCharacter;
+    return critterColour;
   }
   
   /**
@@ -116,7 +147,8 @@ public class CritterHome extends JPanel implements MouseListener
    */ 
   public int getPoints ()
   {
-    return points;
+    //return points;
+    return 50;
   }
   
   /**
@@ -159,38 +191,63 @@ public class CritterHome extends JPanel implements MouseListener
     /*add hours and if it goes on to the next day, increment day and rest time to morning*/
   }
   
+  public void handleFridgeDialog()
+  {
+    if (fridgeDialog!=JOptionPane.CLOSED_OPTION)
+    {
+      if (fridgeDialog==0)
+      {
+        stomach.add(selectedItem);
+      }
+      fridge.remove(selectedIndex);
+      repaint();
+    }
+  }
+  
   /**
-   * The handleFood method creates and displays a JOptionPane to ask the user to decide what to do with the food.
+   *
+   * The mouseReleased method listens for a mouse release.
+   *
+   * The handleFodDialog creates and displays a JOptionPane to ask the user to decide what to do with the food.
    * <p>
    * <b>Local Variable Dictionary: </b>
    * <p>
-   * <b> options[] </b> Object of the options of the handleFoodDialog.
+   * <b> options[] </b> Object of the options of the fridgeDialog.
    * <p>
    * <b> handleFood </b> The JOptionPane OptionDialog to ask the user to decide what to do with the food.
+   * 
+   * @param e MouseEvent that stores the user's mouse actions.
    */
-  public void handleFood()
-  {
-    Object[] options = {"Feed Critter","Throw Out"};
-    handleFoodDialog = JOptionPane.showOptionDialog(this, selectedItem.getName()+"\nFood Group: "+selectedItem.getFoodGroup()
-						      +"\nNutritional Value: "+selectedItem.getNutrientValue(),                                   
-						    "Feed Critter",
-						    JOptionPane.YES_NO_OPTION,
-						    JOptionPane.QUESTION_MESSAGE,
-						    new ImageIcon(selectedItem.getIcon()),    
-						    options, 
-						    options[0]);
-  }
-  
   public void mouseClicked(MouseEvent e) 
   {
-    for (int col=0; col<=fridge.size()*12; col+=63)
+    for (int col=0; col<fridge.size()*63; col+=63)
     {
       if (GroceryStore.correctCol(e.getX(),col+8)&&e.getY()>=8&&e.getY()<=68)
       {
-	selectedItem=fridge.get(col/63);
-	handleFood();
-	break;
+        selectedItem=fridge.get(col/63);
+        selectedIndex=col/63;
+        Object []options = {"Feed Critter","Throw Out"};
+        fridgeDialog = JOptionPane.showOptionDialog(this, selectedItem.getName()+"\nFood Group: "+selectedItem.getFoodGroup()
+                                                      +"\nNutritional Value: "+selectedItem.getNutrientValue(),                                   
+                                                    "My Fridge",
+                                                    JOptionPane.YES_NO_OPTION,
+                                                    JOptionPane.PLAIN_MESSAGE,
+                                                    new ImageIcon(selectedItem.getIcon()),    
+                                                    options, 
+                                                    options[0]);
+        handleFridgeDialog();
       }
+    }
+    if (e.getX()>=26&&e.getX()<=135&&e.getY()>=275&&e.getY()<=405)
+    {
+      JButton []options = {storeButton,recButton,docButton,infoButton,menuButton};
+      leaveDialog = JOptionPane.showOptionDialog(this, "Where do you want to go? \nClose the GPS once you \nhave reached your desired \ndestination.",                                   
+                                                 "GPS",
+                                                 JOptionPane.DEFAULT_OPTION,
+                                                 JOptionPane.QUESTION_MESSAGE,
+                                                 new ImageIcon("images/Critter/gps.jpg"),    
+                                                 options, 
+                                                 options[0]);
     }
   }
   
@@ -206,14 +263,19 @@ public class CritterHome extends JPanel implements MouseListener
    * @param e MouseEvent that stores the user's mouse actions.
    */
   @Override
-  public void mouseEntered(MouseEvent e) {}
+  public void mouseEntered(MouseEvent e) 
+  {
+  }
   
   /**
    * The mouseExited method listens for a mouse exit.
    * @param e MouseEvent that stores the user's mouse actions.
    */
   @Override
-  public void mouseExited(MouseEvent e) {}
+  public void mouseExited(MouseEvent e) 
+  {
+    
+  }
   
   /**
    * The mouseReleased method listens for a mouse release.
@@ -222,15 +284,70 @@ public class CritterHome extends JPanel implements MouseListener
   @Override
   public void mouseReleased(MouseEvent e){}
   
+  /**
+   * The mouseMoved method listens for a mouse movement.
+   * @param e MouseEvent that stores the user's mouse actions.
+   */
+  @Override
+  public void mouseMoved(MouseEvent e) {
+    
+    if (e.getX()>=26&&e.getX()<=135&&e.getY()>=275&&e.getY()<=405)
+    {
+      hoverDoor=true;
+    }
+    else
+    {
+      hoverDoor=false;
+    }
+    if (e.getX()>=200&&e.getX()<=540&&e.getY()>=140&&e.getY()<=470)
+    {
+      hoverCritter=true;
+    }
+    else
+    {
+      hoverCritter=false;
+    }
+    repaint();
+  }
+  
+  /**
+   * The mouseDragged method listens for a mouse drag.
+   * @param e MouseEvent that stores the user's mouse actions.
+   */
+  @Override
+  public void mouseDragged(MouseEvent e){}
+  
   @Override
   public void paintComponent(Graphics g)
   {
-    Image bg = new ImageIcon ("CritterHomeBG.jpg").getImage();
+    Image bg = new ImageIcon ("images/Critter/EmptyHomeBG.jpg").getImage();
+    Image glowDoor=new ImageIcon ("images/Critter/GlowDoor.png").getImage();
+    Image speechBubble=new ImageIcon ("images/Critter/SpeechBubble.png").getImage();
+    Image morningView=new ImageIcon ("images/Critter/morning.png").getImage();
+    Image critter=new ImageIcon ("images/Critter/"+critterColour+"/"+critterColour+"Adult.png").getImage();
+    
+    //Image critter=new ImageIcon ("images/Critter/Blue/BlueAdult.png").getImage();
+    
     g.drawImage(bg, 0, 0,this);
+    g.drawImage(morningView,4,70,this);
+    g.drawImage(critter,200,140,this);
+    if (hoverDoor)
+    {
+      g.drawImage(glowDoor, 0, 250,this);
+    }
+    if (hoverCritter)
+    {
+      g.drawImage(speechBubble, 30, 355,this);
+    }
+    
+    //g.drawImage(new ImageIcon(stomach.get(selectedIndex).getIcon()).getImage(),130, 350,this);
     for (int x=0;x<fridge.size();x++)
     {
-      //JOptionPane.showMessageDialog(this, "Eggs are not supposed to be green.");
       g.drawImage(new ImageIcon((fridge.get(x)).getIcon()).getImage(),x*63+8, 8,this);
     }
+//    for (int x=0;x<stomach.size();x++)
+//    {
+//      g.drawImage(new ImageIcon((stomach.get(x)).getIcon()).getImage(),x*63+8, 450,this);
+//    }
   } 
 }

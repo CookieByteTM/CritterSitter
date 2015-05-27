@@ -40,13 +40,14 @@ import javax.swing.event.*;
 public class GroceryStore extends JPanel implements MouseListener
 {
   Food[][] foodItem=new Food[5][12];
-  Food blank=new Food ("Item Name", "0","shoppingBasket.png");
+  Food blank=new Food ("Item Name", "0","images/Food/shoppingBasket.png");
   Food selectedItem=blank;
   JLabel itemName=new JLabel("Item Name");
   JLabel itemPrice=new JLabel("$0");
-  JLabel numPoints=new JLabel (""+CritterSitterApp.home.getPoints());
+  JLabel numPoints;
   JLabel totalPrice=new JLabel ("$0");
   JButton buyIt=new JButton("BUY");
+  JButton exit=new JButton ("EXIT");
   SpinnerModel spinnerModel = new SpinnerNumberModel(1,1,10,1);
   JSpinner spinner = new JSpinner(spinnerModel);
   int confirmPurchaseDialog;
@@ -62,6 +63,8 @@ public class GroceryStore extends JPanel implements MouseListener
     addMouseListener(this);
     setLayout(null);
     
+    numPoints=new JLabel (""+CritterSitterApp.home.getPoints());
+    
     itemName.setBounds(300,436,300,100);
     itemPrice.setBounds(459,436,100,100);
     totalPrice.setBounds(544,465,100,100);
@@ -71,30 +74,35 @@ public class GroceryStore extends JPanel implements MouseListener
     buyIt.setBackground(new Color(102,255,198));
     buyIt.setEnabled(false);
     buyIt.addActionListener (new ActionListener ()
-			       {
+                               {
       public void actionPerformed (ActionEvent e)
       {
-	if (quantity<=CritterSitterApp.home.getFridgeSpace()&&calcTotal()<=CritterSitterApp.home.getPoints())
-	{
-	  confirmPurchase();
-	  if (confirmPurchaseDialog==0)
-	  {
-	    CritterSitterApp.home.addFood(selectedItem,quantity);
-	  }
-	}
-	else
-	  errorMessage();
+        if (quantity<=CritterSitterApp.home.getFridgeSpace()&&calcTotal()<=CritterSitterApp.home.getPoints())
+        {
+          confirmPurchase();
+          if (confirmPurchaseDialog==0)
+          {
+            CritterSitterApp.home.addFood(selectedItem,quantity);
+          }
+        }
+        else
+          errorMessage();
       }
     }
     );
     
+    exit.setBounds(13,472,70,50);
+    exit.setBackground(new Color(239,58,68));
+    exit.setFocusPainted(false);
+    add(exit);
+    
     spinner.setBounds(542,474,58,24);
     spinner.addChangeListener(new ChangeListener() 
-				{
+                                {
       public void stateChanged(ChangeEvent e) 
       {
-	quantity=(int)spinner.getValue();
-	totalPrice.setText("$"+calcTotal());
+        quantity=(int)spinner.getValue();
+        totalPrice.setText("$"+calcTotal());
       }
     });
     
@@ -108,6 +116,11 @@ public class GroceryStore extends JPanel implements MouseListener
     stockStore();
   }
   
+  public void setButtonsActionListener(ActionListener al)
+  {
+    exit.addActionListener(al);
+    exit.setActionCommand("Exit");
+  }
   /**
    * Stocks the Grocery store with food by adding Food objects to the foodItems array from reading in a text file. 
    * The try block is for reading the foods.txt file and to catch the IOException.
@@ -140,18 +153,18 @@ public class GroceryStore extends JPanel implements MouseListener
     int nutrientValue;
     try
     {
-      in=new BufferedReader(new FileReader("foods.txt"));
+      in=new BufferedReader(new FileReader("text/foods.txt"));
       for (int x=0;x<5;x++)
       {
-	for (int y=0;y<12;y++)
-	{
-	  name=in.readLine();
-	  price=in.readLine();
-	  foodGroup=in.readLine();
-	  nutrientValue=Integer.parseInt(in.readLine());
-	  icon=in.readLine()+".png";
-	  foodItem[x][y]=new Food (name,price,foodGroup,nutrientValue,icon);
-	}
+        for (int y=0;y<12;y++)
+        {
+          name=in.readLine();
+          price=in.readLine();
+          foodGroup=in.readLine();
+          nutrientValue=Integer.parseInt(in.readLine());
+          icon="images/Food/"+in.readLine()+".png";
+          foodItem[x][y]=new Food (name,price,foodGroup,nutrientValue,icon);
+        }
       } 
     }
     catch (IOException e)
@@ -172,13 +185,13 @@ public class GroceryStore extends JPanel implements MouseListener
   {
     Object[] options = {"Confirm Purchase","Cancel"};
     confirmPurchaseDialog = JOptionPane.showOptionDialog(this, "Are you sure of your purchase?\n"+selectedItem.getName()
-							   +".........."+spinner.getValue()+"\n"+"Points to Spend.........."+calcTotal(),                                   
-							 "Confirm Purchase",
-							 JOptionPane.YES_NO_OPTION,
-							 JOptionPane.QUESTION_MESSAGE,
-							 new ImageIcon(selectedItem.getIcon()),    
-							 options, 
-							 options[0]);
+                                                           +".........."+spinner.getValue()+"\n"+"Points to Spend.........."+calcTotal(),                                   
+                                                         "Confirm Purchase",
+                                                         JOptionPane.YES_NO_OPTION,
+                                                         JOptionPane.QUESTION_MESSAGE,
+                                                         new ImageIcon(selectedItem.getIcon()),    
+                                                         options, 
+                                                         options[0]);
   }
   
   public void errorMessage()
@@ -260,23 +273,23 @@ public class GroceryStore extends JPanel implements MouseListener
     {
       if (correctRow(e.getY(),row+15))
       {
-	for (int col=0; col<=(foodItem[row/90].length+1)*63; col+=63)
-	{
-	  if (correctCol(e.getX(),col+8))
-	  {
-	    selectedItem=foodItem[row/90][col/63];
-	    totalPrice.setText("$"+calcTotal());
-	    buyIt.setEnabled(true);
-	    break;
-	  }
-	}
-	break;
+        for (int col=0; col<=(foodItem[row/90].length+1)*63; col+=63)
+        {
+          if (correctCol(e.getX(),col+8))
+          {
+            selectedItem=foodItem[row/90][col/63];
+            totalPrice.setText("$"+calcTotal());
+            buyIt.setEnabled(true);
+            break;
+          }
+        }
+        break;
       }
       else
       {
-	selectedItem=blank;
-	buyIt.setEnabled(false);
-	totalPrice.setText("");
+        selectedItem=blank;
+        buyIt.setEnabled(false);
+        totalPrice.setText("");
       }
     }
     repaint();
@@ -310,9 +323,7 @@ public class GroceryStore extends JPanel implements MouseListener
    * @param e MouseEvent that stores the user's mouse actions.
    */
   @Override
-  public void mouseReleased(MouseEvent e) 
-  {
-  }
+  public void mouseReleased(MouseEvent e) {}
   
   /**
    * Overrided paintComponent method of the Graphics class to draw background and food icons on to the JPanel. The pictures include the store's background and the food icons.
@@ -327,7 +338,7 @@ public class GroceryStore extends JPanel implements MouseListener
   @Override
   public void paintComponent(Graphics g)
   {
-    Image bg = new ImageIcon ("GroceryStoreBG.jpg").getImage();
+    Image bg = new ImageIcon ("images/Food/GroceryStoreBG.jpg").getImage();
     g.drawImage(bg, 0, 0,this);
     g.drawImage(new ImageIcon(selectedItem.getIcon()).getImage(), 701, 467,this);
   } 

@@ -34,7 +34,8 @@ public class AskData extends JPanel implements ActionListener
   String critter = "";
   JTextField userName = new JTextField (50);
   JTextField critterChoice = new JTextField (20);
-  
+  JButton okButton = new JButton ("Ok");
+  boolean ok;
   /**
    * the paintComponent method is used to create the graphics.
    * 
@@ -91,7 +92,7 @@ public class AskData extends JPanel implements ActionListener
    * <p>
    * <b>size </b> This is the dimension variable for positioning and getting the size of the buttons and the label.
    * <p>
-   * <b>fiveButton </b> This is is the five button for 5 virtual days in the difficulty.
+   * <b>fourButton </b> This is is the four button for 5 virtual days in the difficulty.
    * <p>
    * <b>sevenButton </b> This is is the seven button for 7 virtual days in the difficulty.
    * <p>
@@ -110,57 +111,52 @@ public class AskData extends JPanel implements ActionListener
     size = askTheName.getPreferredSize();
     askTheName.setBounds (25 + insets.left, 100 + insets.top, size.width, size.height);
     size = userName.getPreferredSize();
-    userName.setBounds (25 + insets.left, 120 + insets.top, size.width, size.height);    
+    userName.setBounds (25 + insets.left, 120 + insets.top, size.width, size.height);  
+    userName.requestFocusInWindow();
     add (askTheName);
     add (userName);
-    
-    JButton okButton = new JButton ("Ok");
-    add(okButton);
-    size = okButton.getPreferredSize();
-    okButton.setBounds (350 + insets.left, 500 + insets.top, size.width, size.height); 
-    okButton.addActionListener (this); 
     
     JLabel difficultyLabel = new JLabel ("Please choose the difficulty (the number of virtual days): ");
     difficultyLabel.setFont (new Font ("Serif", Font.PLAIN, 15));
     size = difficultyLabel.getPreferredSize();
     difficultyLabel.setBounds (25 + insets.left, 180 + insets.top, size.width, size.height);
     add(difficultyLabel);
-
+    
     //Create the radio buttons.
     JRadioButton threeButton = new JRadioButton("3 Days");
     threeButton.setMnemonic(KeyEvent.VK_3);
     threeButton.setActionCommand("3 Days");
     threeButton.setSelected(true);
     
-    JRadioButton fiveButton = new JRadioButton("5 Days");
-    fiveButton.setMnemonic(KeyEvent.VK_5);
-    fiveButton.setActionCommand("5 Days");
+    JRadioButton fourButton = new JRadioButton("4 Days");
+    fourButton.setMnemonic(KeyEvent.VK_5);
+    fourButton.setActionCommand("4 Days");
     
-    JRadioButton sevenButton = new JRadioButton("7 Days");
+    JRadioButton sevenButton = new JRadioButton("5 Days");
     sevenButton.setMnemonic(KeyEvent.VK_7);
-    sevenButton.setActionCommand("7 Days");
+    sevenButton.setActionCommand("5 Days");
     
     //Group the radio buttons.
     ButtonGroup group = new ButtonGroup();
     group.add(threeButton);
-    group.add(fiveButton);
+    group.add(fourButton);
     group.add(sevenButton);
     
     //Register a listener for the radio buttons.
     threeButton.addActionListener(this);
-    fiveButton.addActionListener(this);
+    fourButton.addActionListener(this);
     sevenButton.addActionListener(this);
     
     JPanel radioPanel = new JPanel(new GridLayout(0, 1));
     radioPanel.add(threeButton);
-    radioPanel.add(fiveButton);
+    radioPanel.add(fourButton);
     radioPanel.add(sevenButton);
     add(radioPanel, BorderLayout.LINE_START);
     size = radioPanel.getPreferredSize();
     radioPanel.setBounds (25 + insets.left, 210 + insets.top, size.width, size.height); 
     setBorder(BorderFactory.createEmptyBorder(20,20,20,20));
     
-    JLabel characterSelectionLabel = new JLabel ("Please enter the character number (red = 1, orange = 2, yellow = 3, blue = 4 and purple = 5): ");
+    JLabel characterSelectionLabel = new JLabel ("Please enter the character number (red = 1, blue = 2, purple = 3, orange = 4 and yellow = 5): ");
     characterSelectionLabel.setFont (new Font ("Serif", Font.PLAIN, 15));
     size = characterSelectionLabel.getPreferredSize();
     characterSelectionLabel.setBounds (25 + insets.left, 310 + insets.top, size.width, size.height);
@@ -168,8 +164,32 @@ public class AskData extends JPanel implements ActionListener
     critterChoice.setBounds (25 + insets.left, 340 + insets.top, size.width, size.height);    
     add(characterSelectionLabel);
     add (critterChoice);
+    
+    
+    okButton.setBounds(359,450,60,30);
+    add(okButton);
   }
   
+  public void setButtonsActionListener(ActionListener al)
+  {
+    okButton.addActionListener(al);
+    okButton.setActionCommand("Ok");
+  }
+  
+  public String getName()
+  {
+    return name;
+  }
+  
+  public int getDifficultyNum()
+  {
+    return difficultyNum;
+  }
+  
+  public String getCritter()
+  {
+    return critter;
+  }
   /**
    * This method is used when there is an action performed by the user through an input device. 
    * The first if statement is used to see if the user clicked the ok button or the three different day buttons.
@@ -188,9 +208,13 @@ public class AskData extends JPanel implements ActionListener
       if (userName.getText().length() == 0 )
       {
         JOptionPane.showMessageDialog(null, "Please input a user name!");
+        ok=false;
       }
       else
-       name = userName.getText(); 
+      {
+        name = userName.getText(); 
+        ok=true;
+      }
       try
       {
         int number = Integer.parseInt (critterChoice.getText());
@@ -199,19 +223,21 @@ public class AskData extends JPanel implements ActionListener
           JOptionPane.showMessageDialog(null, "Please input a number either 1, 2, 3, 4 or 5!");
           critterChoice.setText ("");
           critterChoice.requestFocusInWindow();
+          ok=false;
         }
         else
         {
-         if (number == 1)
-           critter = "red";
-         else if (number == 2)
-           critter = "orange";
-         else if (number == 3)
-           critter = "yellow";
-         else if (number == 4)
-           critter = "blue";
-         else
-           critter = "purple";
+          if (number == 1)
+            critter = "Red";
+          else if (number == 2)
+            critter = "Blue";
+          else if (number == 3)
+            critter = "Purple";
+          else if (number == 4)
+            critter = "Orange";
+          else
+            critter = "Yellow";
+          ok=true;
         } 
       }
       catch (NumberFormatException n)
@@ -219,24 +245,30 @@ public class AskData extends JPanel implements ActionListener
         JOptionPane.showMessageDialog(null, "Please input a number!");
         critterChoice.setText ("");
         critterChoice.requestFocusInWindow();
+      ok=false;
       } 
-      System.out.println(name);
-      System.out.println(difficultyNum);
-      System.out.println(critter);
     }
     else if (ae.getActionCommand ().equals ("3 Days"))
     {
       difficultyNum = 3;
+      ok=true;
     }
-    else if (ae.getActionCommand ().equals ("5 Days"))
+    else if (ae.getActionCommand ().equals ("4 Days"))
     {
       difficultyNum = 5;
+      ok=true;
     }
     else
-      if (ae.getActionCommand ().equals ("7 Days"))
+      if (ae.getActionCommand ().equals ("5 Days"))
     {
       difficultyNum = 7;
+      ok=true;
     }
+  }
+  
+  public boolean getOk()
+  {
+    return ok;
   }
 }
 

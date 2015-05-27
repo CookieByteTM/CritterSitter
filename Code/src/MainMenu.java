@@ -13,7 +13,60 @@ import java.awt.event.*;
  * <b>name: MainMenu.java </b>
  */
 public class MainMenu extends JPanel
-{  
+{ 
+    JButton playButton = new JButton ("Play");
+    JButton highScoresButton = new JButton ("High Scores");
+    
+  public MainMenu()
+  {
+    setLayout (null);
+    JLabel introductionLabel = new JLabel ("Welcome to Critter Sitter! An educational and fun game to learn about nutrition! Please choose an option: ");
+
+    
+    JButton instructionsButton = new JButton ("Instructions");
+    JButton quitButton = new JButton ("Quit");
+    
+    playButton.setBounds(170,160,230,90);
+    highScoresButton.setBounds(170,260,230,60);
+    instructionsButton.setBounds(170,330,230,60);
+    quitButton.setBounds(170,400,230,60);
+    
+    instructionsButton.addActionListener (new ActionListener ()
+                                            {
+      public void actionPerformed (ActionEvent e)
+      {
+        JOptionPane.showMessageDialog(null, "Please read the instructions below: \n Hello and welcome to CritterSitter. First you will see our magnificent splash screen. \n Once that is done you will arrive at the main menu where you can choose to see the high scores, read the instructions, quit and play the game. \n If you click the high scores you will go to a different page with the top 10 high scores. \n If you click the instructions a window (this window) will pop-up and tell you how to play. \n If you click quit you will exit the game and see a good bye window. \n Finally, if you click the play button, you will go to a different screen where you input your username. Next you will choose your \n difficulty of either 3, 5 or 7 days as well as the character of the 5 choices.  \n Once done, you will visit the adoption centre where the doctor will show you the statistics of the game and 'talk' to you. \n Afterwards you will go to the home screen where it will give you a small tutorial of what each of the things do.");
+      }
+    }
+    );
+    
+    quitButton.addActionListener (new ActionListener ()
+          {
+      public void actionPerformed (ActionEvent e)
+      {
+        JOptionPane.showMessageDialog(null, "Thank you for playing and come again soon! Bye!");
+        System.exit(0);
+      }
+    }
+    );
+    
+    add(introductionLabel);
+    add(playButton);
+    add(highScoresButton);
+    add(instructionsButton);
+    add(quitButton);
+  }
+  
+  
+  public void setButtonsActionListener(ActionListener al)
+  {
+   playButton.addActionListener(al);
+   highScoresButton.addActionListener(al);
+   
+   playButton.setActionCommand("Play");
+   highScoresButton.setActionCommand("HighScores");
+  }
+  
   /**
    * the mainMenu method is used to create the 4 buttons and controls what they do as well as the graphics in the menu.
    * 
@@ -46,7 +99,7 @@ public class MainMenu extends JPanel
    * 
    * @param g This is the Graphics variable that is used to paint onto the panel.
    */  
-  public void mainMenu(Graphics g)
+  public void paintComponent(Graphics g)
   {
     Color doctorSkin = new Color (247, 224, 155);
     Color lightPink = new Color (255, 145, 162);
@@ -93,67 +146,5 @@ public class MainMenu extends JPanel
     g.setColor (Color.lightGray);
     g.fillOval (533, 135, 35, 35);
     
-    setLayout (null);
-    Insets insets = getInsets();
-    Dimension size;
-    
-    JLabel introductionLabel = new JLabel ("Welcome to Critter Sitter! An educational and fun game to learn about nutrition! Please choose an option: ");
-    add(introductionLabel);
-    size = introductionLabel.getPreferredSize();
-    introductionLabel.setBounds (80 + insets.left, 100 + insets.top, size.width, size.height);
-    
-    JButton playButton = new JButton ("Play");
-    add(playButton);
-    size = playButton.getPreferredSize();
-    playButton.setBounds (355 + insets.left, 155 + insets.top, size.width, size.height);
-    playButton.addActionListener (new ActionListener ()
-                                    {
-      public void actionPerformed (ActionEvent e)
-      {
-        System.out.println("play");
-      }
-    }
-    );
-    
-    JButton highScoresButton = new JButton ("High Scores");
-    add(highScoresButton);
-    size = highScoresButton.getPreferredSize();
-    highScoresButton.setBounds (332 + insets.left, 195 + insets.top, size.width, size.height);
-    highScoresButton.addActionListener (new ActionListener ()
-                                          {
-      public void actionPerformed (ActionEvent e)
-      {
-        System.out.println("high scores");
-      }
-    }
-    );
-    
-    JButton instructionsButton = new JButton ("Instructions");
-    add(instructionsButton);
-    size = instructionsButton.getPreferredSize();
-    instructionsButton.setBounds (332 + insets.left, 235 + insets.top, size.width, size.height);
-    instructionsButton.addActionListener (new ActionListener ()
-                                            {
-      public void actionPerformed (ActionEvent e)
-      {
-        JOptionPane.showMessageDialog(null, "Please read the instructions below: \n Hello and welcome to CritterSitter. First you will see our magnificent splash screen. \n Once that is done you will arrive at the main menu where you can choose to see the high scores, read the instructions, quit and play the game. \n If you click the high scores you will go to a different page with the top 10 high scores. \n If you click the instructions a window (this window) will pop-up and tell you how to play. \n If you click quit you will exit the game and see a good bye window. \n Finally, if you click the play button, you will go to a different screen where you input your username. Next you will choose your \n difficulty of either 3, 5 or 7 days as well as the character of the 5 choices.  \n Once done, you will visit the adoption centre where the doctor will show you the statistics of the game and “talk” to you. \n Afterwards you will go to the home screen where it will give you a small tutorial of what each of the things do.");
-      }
-    }
-    );
-    
-    JButton quitButton = new JButton ("Quit");
-    add(quitButton);
-    size = quitButton.getPreferredSize();
-    quitButton.setBounds (355 + insets.left, 275 + insets.top, size.width, size.height);
-    quitButton.addActionListener (new ActionListener ()
-                                    {
-      public void actionPerformed (ActionEvent e)
-      {
-        JOptionPane.showMessageDialog(null, "Thank you for playing and come again soon! Bye!");
-        System.exit(0);
-      }
-    }
-    );
   }
 }
-
