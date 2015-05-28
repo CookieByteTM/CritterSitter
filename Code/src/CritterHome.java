@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.Timer;
 import java.awt.event.*;
 import java.awt.*;
 import java.io.*;
@@ -39,20 +40,22 @@ public class CritterHome extends JPanel implements MouseListener, MouseMotionLis
   private int difficulty;
   private String critterColour;
   private ArrayList<Food>fridge=new ArrayList<Food>();
-  private ArrayList<Food>stomach=new ArrayList<Food>();
   private Food selectedItem=new Food();
-  private double hour;
   private int day;
-  private int fridgeDialog;
+  private int fridgeDialog=-1;
   private int leaveDialog;
   private int selectedIndex;
-  JButton storeButton;
+  JButton storeButton=new JButton("Grocery Store");
   JButton recButton=new JButton("Play Outside");
   JButton menuButton=new JButton("Main Menu");
   JButton docButton=new JButton("Doctor");
   JButton infoButton=new JButton("Pamphlet");
-  boolean hoverDoor, hoverCritter; 
+  boolean hoverDoor, hoverCritter, hoverCalendar; 
   Critter myCritter;
+  boolean eaten;
+  Timer clock;
+  int hour,minute;
+  JLabel timeLbl=new JLabel("00:00");
   
   /**
    * The CritterHome constructor creates a critter sitter with the specified name, difficulty and character.
@@ -70,15 +73,34 @@ public class CritterHome extends JPanel implements MouseListener, MouseMotionLis
     this.userName = userName;
     this.difficulty = difficulty;
     this.critterColour = critterColour;
-    storeButton=new JButton("Grocery Store");
+    
     myCritter=new Critter(critterColour);
-  }
-  
-  public CritterHome()
-  {
-    addMouseListener(this);
-    addMouseMotionListener(this);
-    setLayout(null);
+    
+    clock = new Timer(500, new ActionListener() {
+  public void actionPerformed(ActionEvent evt) {
+   if (minute==59)
+   {
+     minute=0;
+     hour++;
+   }
+   else
+   {
+     minute++;
+   }
+   if (minute<10)
+   {
+   timeLbl.setText(hour+":0"+minute);
+   }
+   else
+   {
+   timeLbl.setText(hour+":"+minute);
+   }
+      }
+  });
+    
+    timeLbl.setBounds(640,300,90,20);
+    add(timeLbl);
+    clock.start();
   }
   
   public void setButtonsActionListener(ActionListener al)
@@ -197,11 +219,26 @@ public class CritterHome extends JPanel implements MouseListener, MouseMotionLis
     {
       if (fridgeDialog==0)
       {
-        stomach.add(selectedItem);
+        if (myCritter.getFullness(0)+selectedItem.getNutrientValue()>10)
+          JOptionPane.showMessageDialog(this, "Your critter is too full to eat this!");
+        else
+        {
+          myCritter.addStomach(selectedItem,0);//meal
+          eaten=true;
+        }
       }
+      if (eaten=true||fridgeDialog==1)
+      {
       fridge.remove(selectedIndex);
       repaint();
+      }
     }
+  }
+  
+  public void fullnessBar(Graphics g)
+  {
+    g.setColor(Color.blue);
+    g.fillRect(15,497,myCritter.getFullness(0)*74,28);//meal
   }
   
   /**
@@ -307,6 +344,14 @@ public class CritterHome extends JPanel implements MouseListener, MouseMotionLis
     {
       hoverCritter=false;
     }
+     if (e.getX()>=605&&e.getX()<=760&&e.getY()>=85&&e.getY()<=260)
+    {
+      hoverCalendar=true;
+    }
+    else
+    {
+      hoverCalendar=false;
+    }
     repaint();
   }
   
@@ -325,12 +370,11 @@ public class CritterHome extends JPanel implements MouseListener, MouseMotionLis
     Image speechBubble=new ImageIcon ("images/Critter/SpeechBubble.png").getImage();
     Image morningView=new ImageIcon ("images/Critter/morning.png").getImage();
     Image critter=new ImageIcon ("images/Critter/"+critterColour+"/"+critterColour+"Adult.png").getImage();
-    
-    //Image critter=new ImageIcon ("images/Critter/Blue/BlueAdult.png").getImage();
-    
+    Image schedulePic=new ImageIcon ("images/Critter/Schedule.png").getImage();
     g.drawImage(bg, 0, 0,this);
     g.drawImage(morningView,4,70,this);
     g.drawImage(critter,200,140,this);
+    
     if (hoverDoor)
     {
       g.drawImage(glowDoor, 0, 250,this);
@@ -339,15 +383,23 @@ public class CritterHome extends JPanel implements MouseListener, MouseMotionLis
     {
       g.drawImage(speechBubble, 30, 355,this);
     }
+    if (hoverCalendar)
+    {
+      g.drawImage(schedulePic, 17, 85,this);
+    }
     
-    //g.drawImage(new ImageIcon(stomach.get(selectedIndex).getIcon()).getImage(),130, 350,this);
+    if (eaten=true&&fridgeDialog==0)
+    {
+      g.drawImage(speechBubble, 30, 355,this);
+      g.drawImage(new ImageIcon((myCritter.getStomach()).getIcon()).getImage(),85, 385,this);
+      fullnessBar(g);
+      eaten=false;
+      fridgeDialog=-1;
+    }
+    
     for (int x=0;x<fridge.size();x++)
     {
       g.drawImage(new ImageIcon((fridge.get(x)).getIcon()).getImage(),x*63+8, 8,this);
     }
-//    for (int x=0;x<stomach.size();x++)
-//    {
-//      g.drawImage(new ImageIcon((stomach.get(x)).getIcon()).getImage(),x*63+8, 450,this);
-//    }
   } 
 }

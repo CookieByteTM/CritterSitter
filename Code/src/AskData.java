@@ -29,13 +29,13 @@ import java.awt.image.BufferedImage;
  */
 public class AskData extends JPanel implements ActionListener
 {
-  String name = "";
+  String name = "username";
   int difficultyNum = 3;
-  String critter = "";
+  String critter = "Red";
   JTextField userName = new JTextField (50);
-  JTextField critterChoice = new JTextField (20);
   JButton okButton = new JButton ("Ok");
   boolean ok;
+  
   /**
    * the paintComponent method is used to create the graphics.
    * 
@@ -43,35 +43,18 @@ public class AskData extends JPanel implements ActionListener
    * <b>Local variables: </b>
    * <p>
    * <b>lightYellow </b> This creates the colour called lightYellow.
-   * <p>
-   * <b>character1 </b> This creates the image of the first character.
-   * <p>
-   * <b>character2 </b> This creates the image of the second character.
-   * <p>
-   * <b>character3 </b> This creates the image of the third character.
-   * <p>
-   * <b>character4 </b> This creates the image of the fourth character.
-   * <p>
-   * <b>character5 </b> This creates the image of the fifth character.
    * 
    * @param g this is the graphics variable that will be used to create the background colour for screen.
    */
   public void paintComponent (Graphics g)
   {
-    Color lightYellow = new Color (245, 239, 107);
-    g.setColor(lightYellow);
-    g.fillRect (0, 0, 771, 537);
+    g.drawImage(new ImageIcon ("images/AskDataBG.png").getImage(), 0, 0,this);
     
-    Image character1 = new ImageIcon ("RedCritter.jpg").getImage();
-    g.drawImage(character1, 47, 380,this);
-    Image character2 = new ImageIcon ("OrangeCritter.jpg").getImage();
-    g.drawImage(character2, 185, 380,this);
-    Image character3 = new ImageIcon ("YellowCritter.jpg").getImage();
-    g.drawImage(character3, 323, 380,this);
-    Image character4 = new ImageIcon ("BlueCritter.jpg").getImage();
-    g.drawImage(character4, 477, 380,this);
-    Image character5 = new ImageIcon ("PurpleCritter.jpg").getImage();
-    g.drawImage(character5, 604, 380,this);
+    g.drawImage(new ImageIcon ("images/Critter/Red/RedCritter.png").getImage(), 590, 150,this);
+    g.drawImage(new ImageIcon ("images/Critter/Blue/BlueCritter.png").getImage(), 590, 221,this);
+    g.drawImage(new ImageIcon ("images/Critter/Purple/PurpleCritter.png").getImage(), 590, 290,this);
+    g.drawImage(new ImageIcon ("images/Critter/Orange/OrangeCritter.png").getImage(), 590, 360,this);
+    g.drawImage(new ImageIcon ("images/Critter/Yellow/YellowCritter.png").getImage(), 590, 435,this);
   }
   
   /**
@@ -94,7 +77,7 @@ public class AskData extends JPanel implements ActionListener
    * <p>
    * <b>fourButton </b> This is is the four button for 5 virtual days in the difficulty.
    * <p>
-   * <b>sevenButton </b> This is is the seven button for 7 virtual days in the difficulty.
+   * <b>fiveButton </b> This is is the five button for 7 virtual days in the difficulty.
    * <p>
    * <b>group </b> This is a group of buttons for the radio buttons.
    * <p>
@@ -109,10 +92,13 @@ public class AskData extends JPanel implements ActionListener
     JLabel askTheName = new JLabel ("Please enter your name below: ");
     askTheName.setFont (new Font ("Serif", Font.PLAIN, 15));
     size = askTheName.getPreferredSize();
-    askTheName.setBounds (25 + insets.left, 100 + insets.top, size.width, size.height);
+    askTheName.setBounds (25 + insets.left, 100 + insets.top, size.width, size.height); 
+    JLabel askCritter = new JLabel ("Please choose your critter:");
+    askCritter.setBounds(489,105,190,20);
     size = userName.getPreferredSize();
-    userName.setBounds (25 + insets.left, 120 + insets.top, size.width, size.height);  
-    userName.requestFocusInWindow();
+    userName.setBounds (25 + insets.left, 120 + insets.top, 420,size.height);  
+    userName.setText("username");
+    add(askCritter);
     add (askTheName);
     add (userName);
     
@@ -129,44 +115,82 @@ public class AskData extends JPanel implements ActionListener
     threeButton.setSelected(true);
     
     JRadioButton fourButton = new JRadioButton("4 Days");
-    fourButton.setMnemonic(KeyEvent.VK_5);
+    fourButton.setMnemonic(KeyEvent.VK_4);
     fourButton.setActionCommand("4 Days");
     
-    JRadioButton sevenButton = new JRadioButton("5 Days");
-    sevenButton.setMnemonic(KeyEvent.VK_7);
-    sevenButton.setActionCommand("5 Days");
+    JRadioButton fiveButton = new JRadioButton("5 Days");
+    fiveButton.setMnemonic(KeyEvent.VK_5);
+    fiveButton.setActionCommand("5 Days");
     
     //Group the radio buttons.
     ButtonGroup group = new ButtonGroup();
     group.add(threeButton);
     group.add(fourButton);
-    group.add(sevenButton);
+    group.add(fiveButton);
     
     //Register a listener for the radio buttons.
     threeButton.addActionListener(this);
     fourButton.addActionListener(this);
-    sevenButton.addActionListener(this);
+    fiveButton.addActionListener(this);
     
     JPanel radioPanel = new JPanel(new GridLayout(0, 1));
     radioPanel.add(threeButton);
     radioPanel.add(fourButton);
-    radioPanel.add(sevenButton);
+    radioPanel.add(fiveButton);
     add(radioPanel, BorderLayout.LINE_START);
     size = radioPanel.getPreferredSize();
     radioPanel.setBounds (25 + insets.left, 210 + insets.top, size.width, size.height); 
     setBorder(BorderFactory.createEmptyBorder(20,20,20,20));
     
-    JLabel characterSelectionLabel = new JLabel ("Please enter the character number (red = 1, blue = 2, purple = 3, orange = 4 and yellow = 5): ");
-    characterSelectionLabel.setFont (new Font ("Serif", Font.PLAIN, 15));
-    size = characterSelectionLabel.getPreferredSize();
-    characterSelectionLabel.setBounds (25 + insets.left, 310 + insets.top, size.width, size.height);
-    size = critterChoice.getPreferredSize();
-    critterChoice.setBounds (25 + insets.left, 340 + insets.top, size.width, size.height);    
-    add(characterSelectionLabel);
-    add (critterChoice);
+    //Create the radio buttons.
+    JRadioButton redButton = new JRadioButton("Red");
+    redButton.setActionCommand("Red");
+    redButton.setBounds(498,180,79,20);
+    redButton.setSelected(true);
+    
+    JRadioButton blueButton = new JRadioButton("Blue");
+    blueButton.setActionCommand("Blue");
+    blueButton.setBounds(498,250,79,20);
+    blueButton.setSelected(true);
+    
+    JRadioButton purpleButton = new JRadioButton("Purple");
+    purpleButton.setActionCommand("Purple");
+    purpleButton.setBounds(498,319,79,20);
+    purpleButton.setSelected(true);
+    
+    JRadioButton orangeButton = new JRadioButton("Orange");
+    orangeButton.setActionCommand("Orange");
+    orangeButton.setBounds(498,387,79,20);
+    orangeButton.setSelected(true);
+    
+    JRadioButton yellowButton = new JRadioButton("Yellow");
+    yellowButton.setActionCommand("Yellow");
+    yellowButton.setBounds(498,455,79,20);
+    yellowButton.setSelected(true);
     
     
-    okButton.setBounds(359,450,60,30);
+    //Group the radio buttons.
+    ButtonGroup colourGroup = new ButtonGroup();
+    colourGroup.add(redButton);
+    colourGroup.add(blueButton);
+    colourGroup.add(purpleButton);
+    colourGroup.add(orangeButton);
+    colourGroup.add(yellowButton);
+    
+    //Register a listener for the radio buttons.
+    redButton.addActionListener(this);
+    blueButton.addActionListener(this);
+    purpleButton.addActionListener(this);
+    orangeButton.addActionListener(this);
+    yellowButton.addActionListener(this);
+    
+    add(redButton);
+    add(blueButton);
+    add(purpleButton);
+    add(orangeButton);
+    add(yellowButton);
+    
+    okButton.setBounds(337,493,60,30);
     add(okButton);
   }
   
@@ -208,6 +232,7 @@ public class AskData extends JPanel implements ActionListener
       if (userName.getText().length() == 0 )
       {
         JOptionPane.showMessageDialog(null, "Please input a user name!");
+        userName.requestFocusInWindow();
         ok=false;
       }
       else
@@ -215,54 +240,39 @@ public class AskData extends JPanel implements ActionListener
         name = userName.getText(); 
         ok=true;
       }
-      try
-      {
-        int number = Integer.parseInt (critterChoice.getText());
-        if (number <= 0 || number >= 6)
-        {
-          JOptionPane.showMessageDialog(null, "Please input a number either 1, 2, 3, 4 or 5!");
-          critterChoice.setText ("");
-          critterChoice.requestFocusInWindow();
-          ok=false;
-        }
-        else
-        {
-          if (number == 1)
-            critter = "Red";
-          else if (number == 2)
-            critter = "Blue";
-          else if (number == 3)
-            critter = "Purple";
-          else if (number == 4)
-            critter = "Orange";
-          else
-            critter = "Yellow";
-          ok=true;
-        } 
-      }
-      catch (NumberFormatException n)
-      {
-        JOptionPane.showMessageDialog(null, "Please input a number!");
-        critterChoice.setText ("");
-        critterChoice.requestFocusInWindow();
-      ok=false;
-      } 
+    }
+    else if (ae.getActionCommand ().equals ("Red"))
+    {
+      critter = "Red";
+    }
+    else if (ae.getActionCommand ().equals ("Blue"))
+    {
+      critter = "Blue";
+    }
+    else if (ae.getActionCommand ().equals ("Purple"))
+    {
+      critter = "Purple";
+    }
+    else if (ae.getActionCommand ().equals ("Orange"))
+    {
+      critter = "Orange";
+    }
+    else if (ae.getActionCommand ().equals ("Yellow"))
+    {
+      critter = "Yellow";
     }
     else if (ae.getActionCommand ().equals ("3 Days"))
     {
       difficultyNum = 3;
-      ok=true;
     }
     else if (ae.getActionCommand ().equals ("4 Days"))
     {
       difficultyNum = 5;
-      ok=true;
     }
     else
       if (ae.getActionCommand ().equals ("5 Days"))
     {
       difficultyNum = 7;
-      ok=true;
     }
   }
   

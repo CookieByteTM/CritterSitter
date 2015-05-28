@@ -1,3 +1,11 @@
+import javax.swing.*;
+import java.awt.event.*;
+import java.awt.*;
+import java.io.*;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.awt.Component;
+import java.util.*;
 /**
  * The Critter class is the class that creates the actual critter.
  *
@@ -12,9 +20,7 @@
  * <p>
  * <b>name </b> This String variable is used to save the critter's name.
  * <p>
- * <b>colour </b> This String variable is used to store the critter's colour.
- * <p>
- * <b>geneticDisease </b> This String variable is used to store the critter's genetic diseases.
+ * <b>colour </b> This String variable is used to store the critter's colour.=
  * <p>
  * <b>disease </b> This String variable is used to store the disease the critter has now.
  * <p>
@@ -38,30 +44,63 @@
  */
 public class Critter
 {
-  private String name, colour, geneticDisease, disease;
+  private ArrayList<Food>stomach=new ArrayList<Food>();
+  private String name, colour, disease;
   private int carbCount, fruitVegCount, dairyCount, proteinCount, waterCount, sugarCount, growthStage, hungerLevel;
   private boolean isHealthy = true;
+  int []fullness=new int [3];
+  int [][]foodGroupCount=new int [3][5];
   
   /**
-   * The Critter constructor creates a critter sitter with the specified name, colour and genetic disease.
+   * The Critter constructor creates a critter sitter with the specified colour.
    * 
-   * @param name This String variable is used to save the critter's name.
    * @param colour This String variable is used to store the critter's colour.
-   * @param geneticDisease This String variable is used to store the critter's genetic diseases.
    */
-  public Critter (String name, String colour, String geneticDisease)
+  public Critter (String colour)
   {
-    this.name = name;
     this.colour = colour;
-    this.geneticDisease = geneticDisease;
   }
   
-  /**
-   * The calculateHungerLevel method calculates the level of hunger of the critter. 
-   */
-  private void calculateHungerLevel()
+  private double calcPercentage(int meal, int foodGroup)
   {
-    /*use foodgroupCounts to calculate hungerLevel*/
+    double percentage=0;
+    if (fullness[meal]!=0)
+    {
+        percentage=foodGroupCount[meal][foodGroup]/(double)fullness[meal]*100;
+     }
+      return percentage;
+  }
+  
+  public int getFoodGroupCount(int meal, int foodGroup)
+  {
+    return foodGroupCount[meal][foodGroup];
+  }
+  
+  public void setFoodGroupCount(int nutrientValue,int meal, int foodGroup)
+  {
+    foodGroupCount[meal][foodGroup]+=nutrientValue;
+  }
+  
+  public Food getStomach(int index)
+  {
+    return stomach.get(index);
+  }
+  
+ //last index overloaded
+  public Food getStomach()
+  {
+    return stomach.get(stomach.size()-1);
+  }
+  
+  public void addStomach(Food food, int meal)
+  {
+    stomach.add(food);
+    fullness[meal]+=food.getNutrientValue();
+  }
+  
+  public int getFullness(int meal)
+  {
+    return fullness[meal];
   }
   
   /**
@@ -72,126 +111,6 @@ public class Critter
   public String getName()
   {
     return name;
-  }
-  
-  /**
-   * the getCarbCount method is used to get the critter's carb count.
-   * 
-   * @return carbCount the int variable of the critter's carb count.
-   */
-  public int getCarbCount()
-  {
-    return carbCount;
-  }
-  
-  /**
-   * the setCarbCount method is used to set the critter's new carb count.
-   * 
-   * @param carbCount This is the int number of the new carb count for the critter.
-   */
-  public void setCarbCount(int carbCount)
-  {
-    this.carbCount = carbCount;
-  }
-  
-  /**
-   * the getFruitVegCount method is used to get the critter's fruit and vegetable count.
-   * 
-   * @return fruitVegCount the int variable of the critter's fruit and vegetable count.
-   */
-  public int getFruitVegCount()
-  {
-    return fruitVegCount;
-  }
-  
-  /**
-   * the setFruitVegCount method is used to set the critter's new fruit and vegetable count.
-   * 
-   * @param fruitVegCount This is the int number of the new fruit and vegetable count for the critter.
-   */
-  public void setFruitVegCount(int fruitVegCount)
-  {
-    this.fruitVegCount = fruitVegCount;
-  }
-  
-  /**
-   * the getDairyCount method is used to get the critter's dairy count.
-   * 
-   * @return dairyCount the int variable of the critter's dairy count.
-   */
-  public int getDairyCount()
-  {
-    return dairyCount;
-  }
-  
-  /**
-   * the setDairyCount method is used to set the critter's new dairy count.
-   * 
-   * @param dairyCount This is the int number of the new dairy count for the critter.
-   */
-  public void setDairyCount(int dairyCount)
-  {
-    this.dairyCount = dairyCount;
-  }
-  
-  /**
-   * the getProteinCount method is used to get the critter's protein count.
-   * 
-   * @return proteinCount the int variable of the critter's protein count.
-   */
-  public int getProteinCount()
-  {
-    return proteinCount;
-  }
-  
-  /**
-   * the setProteinCount method is used to set the critter's new protein count.
-   * 
-   * @param proteinCount This is the int number of the new protein count for the critter.
-   */
-  public void setProteinCount(int proteinCount)
-  {
-    this.proteinCount = proteinCount;
-  }
-  
-  /**
-   * the getWaterCount method is used to get the critter's water count.
-   * 
-   * @return waterCount the int variable of the critter's water count.
-   */
-  public int getWaterCount()
-  {
-    return waterCount;
-  }
-  
-  /**
-   * the setWaterCount method is used to set the critter's new water count.
-   * 
-   * @param waterCount This is the int number of the new water count for the critter.
-   */
-  public void setWaterCount(int waterCount)
-  {
-    this.waterCount = waterCount;
-  }
-  
-  /**
-   * the getSugarCount method is used to get the critter's sugar count.
-   * 
-   * @return sugarCount the int variable of the critter's sugar count.
-   */
-  public int getSugarCount()
-  {
-    return sugarCount;
-  }
-  
-  /**
-   * the setSugarCount method is used to set the critter's new sugar count.
-   * 
-   * @param sugarCount This is the int number of the new sugar count for the critter.
-   */
-  public void setSugarCount(int sugarCount)
-  {
-    this.sugarCount = sugarCount;
   }
   
   /**
@@ -213,24 +132,4 @@ public class Critter
   {
     this.growthStage = growthStage;
   }
-  
-  /**
-   * the getHungerLevel method is used to get the critter's hunger level.
-   * 
-   * @return hungerLevel the int variable of the critter's huner level.
-   */
-  public int getHungerLevel()
-  {
-    return hungerLevel;
   }
-  
-  /**
-   * the setHungerLevel method is used to set the critter's new hunger level.
-   * 
-   * @param hungerLevel This is the int number of the new hunger level for the critter.
-   */
-  public void setHungerLevel(int hungerLevel)
-  {
-    this.hungerLevel = hungerLevel;
-  }
-}
