@@ -55,7 +55,6 @@ public class CritterHome extends JPanel implements MouseListener, MouseMotionLis
   boolean eaten;
   Timer clock;
   int hour,minute;
-  JLabel timeLbl=new JLabel("00:00");
   
   /**
    * The CritterHome constructor creates a critter sitter with the specified name, difficulty and character.
@@ -87,19 +86,9 @@ public class CritterHome extends JPanel implements MouseListener, MouseMotionLis
    {
      minute++;
    }
-   if (minute<10)
-   {
-   timeLbl.setText(hour+":0"+minute);
-   }
-   else
-   {
-   timeLbl.setText(hour+":"+minute);
-   }
+   repaint();
       }
   });
-    
-    timeLbl.setBounds(640,300,90,20);
-    add(timeLbl);
     clock.start();
   }
   
@@ -365,19 +354,15 @@ public class CritterHome extends JPanel implements MouseListener, MouseMotionLis
   @Override
   public void paintComponent(Graphics g)
   {
-    Image bg = new ImageIcon ("images/Critter/EmptyHomeBG.jpg").getImage();
-    Image glowDoor=new ImageIcon ("images/Critter/GlowDoor.png").getImage();
     Image speechBubble=new ImageIcon ("images/Critter/SpeechBubble.png").getImage();
-    Image morningView=new ImageIcon ("images/Critter/morning.png").getImage();
-    Image critter=new ImageIcon ("images/Critter/"+critterColour+"/"+critterColour+"Adult.png").getImage();
-    Image schedulePic=new ImageIcon ("images/Critter/Schedule.png").getImage();
-    g.drawImage(bg, 0, 0,this);
-    g.drawImage(morningView,4,70,this);
-    g.drawImage(critter,200,140,this);
+    
+    g.drawImage(new ImageIcon ("images/Critter/EmptyHomeBG.jpg").getImage(), 0, 0,this);
+    g.drawImage(new ImageIcon ("images/Critter/morning.png").getImage(),4,70,this);
+    g.drawImage(new ImageIcon ("images/Critter/"+critterColour+"/"+critterColour+"Adult.png").getImage(),200,140,this);
     
     if (hoverDoor)
     {
-      g.drawImage(glowDoor, 0, 250,this);
+      g.drawImage(new ImageIcon ("images/Critter/GlowDoor.png").getImage(), 0, 250,this);
     }
     if (hoverCritter)
     {
@@ -385,7 +370,7 @@ public class CritterHome extends JPanel implements MouseListener, MouseMotionLis
     }
     if (hoverCalendar)
     {
-      g.drawImage(schedulePic, 17, 85,this);
+      g.drawImage(new ImageIcon ("images/Critter/Schedule.png").getImage(), 17, 85,this);
     }
     
     if (eaten=true&&fridgeDialog==0)
@@ -397,6 +382,29 @@ public class CritterHome extends JPanel implements MouseListener, MouseMotionLis
       fridgeDialog=-1;
     }
     
+    if (hour<10)
+   {
+     g.drawImage(new ImageIcon("images/Critter/0.png").getImage(),632,289,this);
+     g.drawImage(new ImageIcon("images/Critter/"+hour+".png").getImage(),656,289,this);
+   }
+   else
+   {
+     g.drawImage(new ImageIcon("images/Critter/"+hour/10+".png").getImage(),632,289,this);
+     g.drawImage(new ImageIcon("images/Critter/"+hour%10+".png").getImage(),656,289,this);
+   }
+   
+   
+    if (minute<10)
+   {
+     g.drawImage(new ImageIcon("images/Critter/0.png").getImage(),696,289,this);
+     g.drawImage(new ImageIcon("images/Critter/"+minute+".png").getImage(),720,289,this);
+   }
+   else
+   {
+     g.drawImage(new ImageIcon("images/Critter/"+minute/10+".png").getImage(),696,289,this);
+     g.drawImage(new ImageIcon("images/Critter/"+minute%10+".png").getImage(),720,289,this);
+   }
+   //restrict fridge repainting
     for (int x=0;x<fridge.size();x++)
     {
       g.drawImage(new ImageIcon((fridge.get(x)).getIcon()).getImage(),x*63+8, 8,this);
