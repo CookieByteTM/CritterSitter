@@ -1,3 +1,4 @@
+import javax.swing.*;
 /**
  * The Doctor class is the class that creates the doctor.
  *
@@ -16,11 +17,17 @@
  * <p>
  * <b>pharmacy </b> This is a String 2D array that stores the medecine according to the name of the disease.
  */
-public class Doctor
+public class Doctor extends JPanel
 {
   String [] diseases;
   boolean gavePrescription;
   String [][]pharmacy;
+  JLabel doctor=new JLabel ("Doctor");
+  
+  public Doctor()
+  {
+    add(doctor);
+  }
   
   /**
    * The writePrescription method is for the user to write a prescription to the critter to the designated disease.

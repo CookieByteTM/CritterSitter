@@ -1,6 +1,0 @@
-numQuestions
-Question
-a
-b
-c
-Answer

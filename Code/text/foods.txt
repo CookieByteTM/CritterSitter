@@ -1,300 +1,300 @@
 Breakfast Plate
-1
-food group
+10
+3
 2
 breakfastPlate
 Grilled Trout
-1
-food group
+15
+3
 2
 grilledTrout
 Lasagna
+18
 1
-food group
-2
+4
 lasagna
 Spaghetti
+18
 1
-food group
-2
+4
 spaghetti
 Steak
-1
-food group
+20
+3
 2
 steak
 Sandwich
+5
 1
-food group
-2
+3
 sandwich
 Sushi
+11
+3
 1
-food group
-2
 sushi
 Tomato Soup
+5
+0
 1
-food group
-2
 tomatoSoup
 Salad
+7
+0
 1
-food group
-2
 salad
 Hamburger
-1
-food group
+5
+3
 2
 hamburger
 Rice 
+3
 1
-food group
-2
+1
 rice
 Mushroom Soup
+4
+0
 1
-food group
-2
 mushroomSoup
 Cookie
 1
-food group
-2
+4
+1
 cookie
 Croissant
+2
 1
-food group
 2
 croissant
 Baguette
+4
 1
-food group
-2
+3
 baguette
 Pretzel
 1
-food group
-2
+1
+1
 pretzel
 Sliced Bread
+2
 1
-food group
 2
 slicedBread
 Chocolate
-1
-food group
 2
+4
+1
 chocolate
 Doughnut
 1
-food group
-2
+4
+1
 doughnut
 Macaron
-1
-food group
+3
+4
 2
 macaron
 Peanut Butter
-1
-food group
-2
+3
+3
+0.5
 peanutButter
 Blueberry Jam
-1
-food group
-2
+3
+0
+0.5
 blueberryJam
 Potato Chips
+3
+4
 1
-food group
-2
 potatoChips
 Candy
 1
-food group
-2
+4
+0.5
 candy
 Apple
 1
-food group
-2
+0
+1
 apple
 Banana
 1
-food group
-2
+0
+1
 banana
 Grapes
 1
-food group
-2
+0
+0.5
 grapes
 Mango
 1
-food group
-2
+0
+1
 mango
 Strawberry
 1
-food group
-2
+0
+1
 strawberry
 Mandarin Orange
 1
-food group
-2
+0
+1
 mandarinOrange
 Broccoli
 1
-food group
-2
+0
+1
 broccoli
 Carrot
 1
-food group
-2
+0
+1
 carrot
 Lettuce
 1
-food group
-2
+0
+0.5
 lettuce
 Potato
-1
-food group
 2
+0
+1
 potato
 Tomato
 1
-food group
-2
+0
+1
 tomato
 Corn 
 1
-food group
-2
+0
+1
 corn
 Dorada Fish
 1
-food group
-2
+3
+1
 doradaFish
 Salmon Steak
 1
-food group
-2
+3
+1
 salmonSteak
 Trout
 1
-food group
-2
+3
+1
 trout
 Oyster
 1
-food group
-2
+3
+0.5
 oyster
 Chicken
 1
-food group
-2
+3
+1
 chicken
 Salami
 1
-food group
-2
+3
+0.5
 salami
 Sausage
 1
-food group
-2
+3
+1
 sausage
 Octopus
 1
-food group
-2
+3
+0.5
 octopus
 Lobster
 1
-food group
+3
 2
 lobster
 Shrimp
 1
-food group
-2
+3
+0.5
 shrimp
 Mussel
 1
-food group
-2
+3
+0.5
 mussel
 Bacon
 1
-food group
-2
+3
+1
 bacon
 Ice Cream
 1
-food group
 2
+1
 icecream
 Chocolate Cake
 1
-food group
-2
+4
+1
 chocolateCake
 Pudding
 1
-food group
-2
+4
+1
 pudding
 Raspberry Cheesecake
 1
-food group
 2
+1
 raspberryCheesecake
 Popsicle
 1
-food group
-2
+4
+0.5
 popsicle
 Yogurt
 1
-food group
 2
+1
 yogurt
 Pizza
 1
-food group
-2
+1
+4
 pizza
 Brie Cheese
 1
-food group
 2
+0.5
 brieCheese
 Swiss Cheese
 1
-food group
 2
+0.5
 swissCheese
 Eggs
 1
-food group
-2
+3
+1
 eggs
 Milk
-1
-food group
 2
+2
+1
 milk
 Water
 1
-food group
-2
+5
+1
 water

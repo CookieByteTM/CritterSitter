@@ -2,17 +2,15 @@ import javax.swing.*;
 import java.awt.event.*;
 import java.awt.*;
 import java.io.*;
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
 
 /**
- * The askName class is the class that extends the JPanel and ask the user for their name. It implements action listener for the buttons.
+ * The AskData class is the class that extends the JPanel and ask the user for their name. It implements action listener for the buttons.
  *
  * @author Jasmine Ou and Laura Wong
  * @version 3 05.29.15
  * 
  * <p>
- * <b>name: askName.java </b>
+ * <b>name: AskName.java </b>
  * 
  * <p>
  * <b>Instance Variables: </b>
@@ -25,63 +23,54 @@ import java.awt.image.BufferedImage;
  * <p>
  * <b>userName </b>This is the user name text field where the user enters their user name.
  * <p>
- * <b>critterChoice </b>This is the text field where the user chooses which critter they want.
+ * <b>okButton </b>This is the button for the user to enter all their data.
+ * <p>
+ * <b>ok </b>This is a boolean variable that indicates if the ok button was pushed or not.
  */
 public class AskData extends JPanel implements ActionListener
 {
-  String name = "username";
-  int difficultyNum = 3;
-  String critter = "Red";
+  private String name = "username";
+  private int difficultyNum=1;
+  private String critter = "Red";
   JTextField userName = new JTextField (50);
   JButton okButton = new JButton ("Ok");
-  boolean ok;
+  private boolean ok;
   
   /**
-   * the paintComponent method is used to create the graphics.
-   * 
-   * <p>
-   * <b>Local variables: </b>
-   * <p>
-   * <b>lightYellow </b> This creates the colour called lightYellow.
-   * 
-   * @param g this is the graphics variable that will be used to create the background colour for screen.
-   */
-  public void paintComponent (Graphics g)
-  {
-    g.drawImage(new ImageIcon ("images/AskDataBG.png").getImage(), 0, 0,this);
-    
-    g.drawImage(new ImageIcon ("images/Critter/Red/RedCritter.png").getImage(), 590, 150,this);
-    g.drawImage(new ImageIcon ("images/Critter/Blue/BlueCritter.png").getImage(), 590, 221,this);
-    g.drawImage(new ImageIcon ("images/Critter/Purple/PurpleCritter.png").getImage(), 590, 290,this);
-    g.drawImage(new ImageIcon ("images/Critter/Orange/OrangeCritter.png").getImage(), 590, 360,this);
-    g.drawImage(new ImageIcon ("images/Critter/Yellow/YellowCritter.png").getImage(), 590, 435,this);
-  }
-  
-  /**
-   * the fields method is used to ask for the user's name.
+   * the AskData constructor is used to create the fields, buttons and labels for the user to enter their information.
    * 
    * <p>
    * <b>Local variables: </b>
    * <p>
    * <b>askTheName </b> This is the label that asks the user for their name.
    * <p>
-   * <b>okButton </b> This is a the ok button that submits all the user's inputs and saves it.
-   * <p>
    * <b>difficultyLabel </b> This is the difficulty label that asks the user for it's difficulty.
    * <p>
-   * <b>threeButton </b> This is is the three button for 3 virtual days in the difficulty.
+   * <b>easyButton </b> This is is the easy button for the easy level.
    * <p>
    * <b>insets </b> This is the inset variable for positioning the buttons and label.
    * <p>
    * <b>size </b> This is the dimension variable for positioning and getting the size of the buttons and the label.
    * <p>
-   * <b>fourButton </b> This is is the four button for 5 virtual days in the difficulty.
+   * <b>mediumButton </b> This is is the medium button for the medium level.
    * <p>
-   * <b>fiveButton </b> This is is the five button for 7 virtual days in the difficulty.
+   * <b>hardButton </b> This is is the hard button for the hard level.
    * <p>
-   * <b>group </b> This is a group of buttons for the radio buttons.
+   * <b>difficultyGroup </b> This is a group of buttons for the difficulty radio buttons.
    * <p>
    * <b>radioPanel </b> This is a radio panel where the radio buttons are added on to.
+   * <p>
+   * <b>redButton </b>This is the button for the red critter.
+   * <p>
+   * <b>blueButton </b>This is the button for the blue critter.
+   * <p>
+   * <b>purpleButton </b>This is the button for the purple critter.
+   * <p>
+   * <b>orangeButton </b>This is the button for the orange critter.
+   * <p>
+   * <b>yellowButton </b>This is the button for the yellow critter.
+   * <p>
+   * <b>colorGroup </b> This is a group of buttons for the different coloured critter radio button options.
    */
   public AskData()
   {
@@ -94,7 +83,7 @@ public class AskData extends JPanel implements ActionListener
     size = askTheName.getPreferredSize();
     askTheName.setBounds (25 + insets.left, 100 + insets.top, size.width, size.height); 
     JLabel askCritter = new JLabel ("Please choose your critter:");
-    askCritter.setBounds(489,105,190,20);
+    askCritter.setBounds(489, 105, 190, 20);
     size = userName.getPreferredSize();
     userName.setBounds (25 + insets.left, 120 + insets.top, 420,size.height);  
     userName.setText("username");
@@ -102,71 +91,66 @@ public class AskData extends JPanel implements ActionListener
     add (askTheName);
     add (userName);
     
-    JLabel difficultyLabel = new JLabel ("Please choose the difficulty (the number of virtual days): ");
+    JLabel difficultyLabel = new JLabel ("Please select a level: ");
     difficultyLabel.setFont (new Font ("Serif", Font.PLAIN, 15));
     size = difficultyLabel.getPreferredSize();
     difficultyLabel.setBounds (25 + insets.left, 180 + insets.top, size.width, size.height);
     add(difficultyLabel);
     
     //Create the radio buttons.
-    JRadioButton threeButton = new JRadioButton("3 Days");
-    threeButton.setMnemonic(KeyEvent.VK_3);
-    threeButton.setActionCommand("3 Days");
-    threeButton.setSelected(true);
+    JRadioButton easyButton = new JRadioButton("Easy (3 Days)");
+    easyButton.setMnemonic(KeyEvent.VK_3);
+    easyButton.setActionCommand("easy");
+    easyButton.setSelected(true);
     
-    JRadioButton fourButton = new JRadioButton("4 Days");
-    fourButton.setMnemonic(KeyEvent.VK_4);
-    fourButton.setActionCommand("4 Days");
+    JRadioButton mediumButton = new JRadioButton("Medium (4 Days)");
+    mediumButton.setMnemonic(KeyEvent.VK_4);
+    mediumButton.setActionCommand("medium");
     
-    JRadioButton fiveButton = new JRadioButton("5 Days");
-    fiveButton.setMnemonic(KeyEvent.VK_5);
-    fiveButton.setActionCommand("5 Days");
+    JRadioButton hardButton = new JRadioButton("Hard (5 Days)");
+    hardButton.setMnemonic(KeyEvent.VK_5);
+    hardButton.setActionCommand("hard");
     
     //Group the radio buttons.
-    ButtonGroup group = new ButtonGroup();
-    group.add(threeButton);
-    group.add(fourButton);
-    group.add(fiveButton);
+    ButtonGroup difficultyGroup = new ButtonGroup();
+    difficultyGroup.add(easyButton);
+    difficultyGroup.add(mediumButton);
+    difficultyGroup.add(hardButton);
     
     //Register a listener for the radio buttons.
-    threeButton.addActionListener(this);
-    fourButton.addActionListener(this);
-    fiveButton.addActionListener(this);
+    easyButton.addActionListener(this);
+    mediumButton.addActionListener(this);
+    hardButton.addActionListener(this);
     
     JPanel radioPanel = new JPanel(new GridLayout(0, 1));
-    radioPanel.add(threeButton);
-    radioPanel.add(fourButton);
-    radioPanel.add(fiveButton);
+    radioPanel.add(easyButton);
+    radioPanel.add(mediumButton);
+    radioPanel.add(hardButton);
     add(radioPanel, BorderLayout.LINE_START);
     size = radioPanel.getPreferredSize();
     radioPanel.setBounds (25 + insets.left, 210 + insets.top, size.width, size.height); 
-    setBorder(BorderFactory.createEmptyBorder(20,20,20,20));
     
     //Create the radio buttons.
     JRadioButton redButton = new JRadioButton("Red");
     redButton.setActionCommand("Red");
-    redButton.setBounds(498,180,79,20);
+    redButton.setBounds(498, 180, 79, 20);
     redButton.setSelected(true);
     
     JRadioButton blueButton = new JRadioButton("Blue");
     blueButton.setActionCommand("Blue");
-    blueButton.setBounds(498,250,79,20);
-    blueButton.setSelected(true);
+    blueButton.setBounds(498, 250, 79, 20);
     
     JRadioButton purpleButton = new JRadioButton("Purple");
     purpleButton.setActionCommand("Purple");
-    purpleButton.setBounds(498,319,79,20);
-    purpleButton.setSelected(true);
+    purpleButton.setBounds(498, 319, 79, 20);
     
     JRadioButton orangeButton = new JRadioButton("Orange");
     orangeButton.setActionCommand("Orange");
-    orangeButton.setBounds(498,387,79,20);
-    orangeButton.setSelected(true);
+    orangeButton.setBounds(498, 387, 79, 20);
     
     JRadioButton yellowButton = new JRadioButton("Yellow");
     yellowButton.setActionCommand("Yellow");
-    yellowButton.setBounds(498,455,79,20);
-    yellowButton.setSelected(true);
+    yellowButton.setBounds(498, 455, 79, 20);
     
     
     //Group the radio buttons.
@@ -190,38 +174,61 @@ public class AskData extends JPanel implements ActionListener
     add(orangeButton);
     add(yellowButton);
     
-    okButton.setBounds(337,493,60,30);
+    okButton.setBounds(335, 493, 60, 30);
     add(okButton);
   }
   
+  /**
+   * The setButtonsActionListener method is used to add action listener to the ok button as well as set its action command to "ok".
+   * 
+   * @param al This is the ActionListener varaible.
+   */
   public void setButtonsActionListener(ActionListener al)
   {
     okButton.addActionListener(al);
     okButton.setActionCommand("Ok");
   }
   
+  /**
+   * This getName method is used to return the user's name.
+   * 
+   * @return name This is the user's String name.
+   */
   public String getName()
   {
     return name;
   }
   
+  /**
+   * This getDifficultyNum method is used to return the user's difficulty choice. It needs to be static in order to be accessed through the recreation class.
+   * 
+   * @return difficultyNum This is the user's int difficulty number.
+   */
   public int getDifficultyNum()
   {
     return difficultyNum;
   }
   
+  /**
+   * This getCritter method is used to return the user's critter colour choice.
+   * 
+   * @return critter This is the String color of the critter.
+   */
   public String getCritter()
   {
     return critter;
   }
+  
+  public void reset()
+  {
+    userName.setText("username");
+  }
   /**
    * This method is used when there is an action performed by the user through an input device. 
-   * The first if statement is used to see if the user clicked the ok button or the three different day buttons.
+   * The first if statement is used to see if the user clicked the ok button, the 3 different day buttons and the 5 different colour buttons.
    * The nested if in the "ok" pushed if statement is used if the user inputted a username or not, if not then a message comes up indicating that they need to input a value.
-   * The try block is used to parse the integer value to see if the user inputted an inteer or not. 
-   * The if statement in the try block is used to check if the user inputted a number within the desinated range (1, 2, 3, 4 or 5).
    * The if statement in the else is used to store the colour of the critter that was chosen.
-   * The last if statement is used in the else to see if the user clicked the 7 days button.
+   * The last if statement is used in the else to see if the user clicked the hard level button.
    *
    * @param ae  This creates an instance of the ActionEvent class and helps to see if an action has been performed.
    */
@@ -233,12 +240,12 @@ public class AskData extends JPanel implements ActionListener
       {
         JOptionPane.showMessageDialog(null, "Please input a user name!");
         userName.requestFocusInWindow();
-        ok=false;
+        ok = false;
       }
       else
       {
         name = userName.getText(); 
-        ok=true;
+        ok = true;
       }
     }
     else if (ae.getActionCommand ().equals ("Red"))
@@ -261,24 +268,45 @@ public class AskData extends JPanel implements ActionListener
     {
       critter = "Yellow";
     }
-    else if (ae.getActionCommand ().equals ("3 Days"))
+    else if (ae.getActionCommand ().equals ("easy"))
+    {
+      difficultyNum = 1;
+    }
+    else if (ae.getActionCommand ().equals ("medium"))
+    {
+      difficultyNum = 2;
+    }
+    else
+      if (ae.getActionCommand ().equals ("hard"))
     {
       difficultyNum = 3;
     }
-    else if (ae.getActionCommand ().equals ("4 Days"))
-    {
-      difficultyNum = 5;
-    }
-    else
-      if (ae.getActionCommand ().equals ("5 Days"))
-    {
-      difficultyNum = 7;
-    }
   }
   
+  /**
+   * This getOk method is used to return to see if the user can proceed to the next screen without error
+   * 
+   * @return true if there are no errors for the user input.
+   */
   public boolean getOk()
   {
     return ok;
+  }
+  
+  /**
+   * The paintComponent method is used to create the graphics.
+   * 
+   * @param g this is the graphics variable that will be used to create the background colour for screen.
+   */
+  @Override
+  public void paintComponent (Graphics g)
+  {
+    g.drawImage(new ImageIcon ("images/AskDataBG.png").getImage(), 0, 0,this);
+    g.drawImage(new ImageIcon ("images/Critter/Red/RedCritter.png").getImage(), 590, 150,this);
+    g.drawImage(new ImageIcon ("images/Critter/Blue/BlueCritter.png").getImage(), 590, 221,this);
+    g.drawImage(new ImageIcon ("images/Critter/Purple/PurpleCritter.png").getImage(), 590, 290,this);
+    g.drawImage(new ImageIcon ("images/Critter/Orange/OrangeCritter.png").getImage(), 590, 360,this);
+    g.drawImage(new ImageIcon ("images/Critter/Yellow/YellowCritter.png").getImage(), 590, 435,this);
   }
 }
 

@@ -1,0 +1,512 @@
+import javax.swing.*;
+import javax.swing.Timer;
+import java.awt.event.*;
+import java.awt.*;
+import java.io.*;
+import java.util.*;
+/**
+ * The CritterHome class is the class that creates the home of the Critter which has a critter. 
+ *
+ * @author Jasmine Ou
+ * @version 3 05.29.15
+ * 
+ * <p>
+ * <b>name: Critter Home.java </b>
+ *
+ * <p>
+ * <b>Instance variables: </b>
+ * <p>
+ * <b>userName </b> This String variable is used to save the user's name.
+ * <p>
+ * <b>critterColour </b> This String variable is used to store the selected critter colour.
+ * <p>
+ * <b>points </b> This int variable is used to store the number of points of the user.
+ * <p>
+ * <b>difficulty </b> This int variable is used to store the user's selected difficulty level.
+ * <p>
+ * <b>selectedIndex </b> The int variable of the index of the food item's location in the fridge. 
+ * <p>
+ * <b>day </b> This int variable is used to store the virtual day number.
+ * <p>
+ * <b>hour </b> This int variable is used to store the virtual hour number.
+ * <p>
+ * <b>minute </b> This int variable is used to store the virtual minute number.
+ * <p>
+ * <b>leaveDialog </b> This creates an instance of the JDialog class for displaying a menu of choices to the user for where they want to navigate to. 
+ * <p>
+ * <b>fridgeDialog </b> This int variable is used to store the user's choice when they click on the fridge's food. 
+ * <p>
+ * <b>hoverDoor </b> This boolean variable to store whether the user's mouse entered the picture of the door or not.
+ * <p>
+ * <b>hoverCritter </b> This boolean variable to store whether the user's mouse entered the picture of the critter or not.
+ * <p>
+ * <b>hoverCalendar </b> This boolean variable to store whether the user's mouse entered the picture of the calendar or not.
+ * <p>
+ * <b>eaten </b> This boolean variable to store whether the critter just ate something or not.
+ * <p>
+ * <b>fridge </b> An ArrayList of Food objects in the fridge. 
+ * <p>
+ * <b>selectedItem </b> The Food object that the user selected from their fridge.
+ * <p>
+ * <b>storeButton </b> This creates an instance of the JButton class with the string title "GroceryStore" passed in. 
+ * <p>
+ * <b>recButton </b> This creates an instance of the JButton class with the string title "Play Outside" passed in. 
+ * <p>
+ * <b>menuButton </b> This creates an instance of the JButton class with the string title "Main Menu" passed in. 
+ * <p>
+ * <b>docButton </b> This creates an instance of the JButton class with the string title "Doctor" passed in. 
+ * <p>
+ * <b>infoButton </b> This creates an instance of the JButton class with the string title "Pamphlet" passed in.
+ * <p>
+ * <b>myCritter </b> This creates an instance of the Critter class.
+ * <p>
+ * <b>clock </b> This creates an instance of the Timer class. 
+ *
+ */
+public class CritterHome extends JPanel implements MouseListener, MouseMotionListener
+{
+  private String userName, critterColour;
+  private int points, difficulty,selectedIndex,day, hour, minute;
+  JDialog leaveDialog;
+  private int fridgeDialog=-1;
+  private boolean hoverDoor, hoverCritter, hoverCalendar, eaten; 
+  private ArrayList<Food>fridge=new ArrayList<Food>();
+  private Food selectedItem=new Food();
+  JButton storeButton=new JButton("Grocery Store");
+  JButton recButton=new JButton("Play Outside");
+  JButton menuButton=new JButton("Main Menu");
+  JButton docButton=new JButton("Doctor");
+  JButton infoButton=new JButton("Pamphlet");
+  Critter myCritter;
+  Timer clock;
+  
+  /**
+   * The CritterHome constructor creates a CritterHome with the specified userName, difficulty and critterColour.
+   * It adds a MouseListener and a MouseMotionListener to the JPanel and sets the layout to null.
+   * The Timer, clock, has an ActionListener that increments time in minutes and hours. 
+   * The first if statement checks if minute is 59. If so, hour is incremented, else, minute is incremented.
+   * The clock is started. 
+   * @param userName This String variable is used to save the user's name. 
+   * @param difficulty This int variable is used to store the user's difficulty level.
+   * @param critterColour This String variable is used to store the critter's colour.
+   */
+  public CritterHome (String userName, int difficulty, String critterColour)
+  {
+    addMouseListener(this);
+    addMouseMotionListener(this);
+    setLayout(null);
+    
+    this.userName = userName;
+    this.difficulty = difficulty;
+    this.critterColour = critterColour;
+    
+    myCritter=new Critter(critterColour);
+    
+    clock = new Timer(500, new ActionListener() {
+      public void actionPerformed(ActionEvent evt) {
+        if (minute==59)
+        {
+          minute=0;
+          hour++;
+        }
+        else
+        {
+          minute++;
+        }
+        repaint();
+      }
+    });
+    clock.start();
+  }
+  
+  /**
+   * The setButtonsActionListener method adds an ActionListener to each button and sets their action commands. 
+   * 
+   * @param al is the ActionListener passed in to be added to the buttons.
+   */
+  public void setButtonsActionListener(ActionListener al)
+  {
+    storeButton.addActionListener(al);
+    recButton.addActionListener(al);
+    menuButton.addActionListener(al);
+    docButton.addActionListener(al);
+    infoButton.addActionListener(al);
+    
+    storeButton.setActionCommand("Store");
+    recButton.setActionCommand("Recreation");
+    menuButton.setActionCommand("Menu");
+    docButton.setActionCommand("Doctor");
+    infoButton.setActionCommand("Pamphlet");
+  }
+  
+  /**
+   * 
+   * The addFood method adds food to the fridge by quantity and repaints the fridge graphics.   
+   * The for loop starts from 0, runs while less than quantity and increments by one each in order to add the correct amount of the food Object to the fridge.
+   * 
+   * <p>
+   * <b>Local Variable Dictionary: </b>
+   * <p>
+   * <b> x </b> The integer for loop variable that starts from 0, runs while less than quantity and increments by one each in order to add the correct amount of the food Object to the fridge.
+   * 
+   * @param food is the Food object to be added to the fridge
+   * @param quantity is the integer amount of the Food object to be added to the fridge.
+   */
+  public void addFood(Food food,int quantity)
+  {
+    for (int x=0;x<quantity;x++)
+    {
+      fridge.add(food);
+    }
+    repaint();
+  }
+  
+  /**
+   * The getFridgeSpace method gets the remaining fridge space where its maximum capacity is 12 items.
+   * 
+   * @return the integer storing the remaining fridge space.
+   */
+  public int getFridgeSpace()
+  {
+    return 12-fridge.size();
+  }
+  
+  /**
+   * The getUserName method gets the user's name.
+   * 
+   * @return userName the String variable of the user's name.
+   */
+  public String getUserName ()
+  {
+    return userName;
+  }
+  
+  /**
+   * The getDifficulty method gets the user's difficulty.
+   * 
+   * @return difficulty the int variable of the user's difficulty.
+   */
+  public int getDifficulty ()
+  {
+    return difficulty;
+  }
+  
+  /**
+   * The getCritterCharacter method gets the critter's colour
+   * 
+   * @return critterCharacter the String variable of the critter's colour
+   */
+  public String getCritterColour ()
+  {
+    return critterColour;
+  }
+  
+  /**
+   * The getPoints method gets the user's points.
+   * 
+   * @return points the int variable of the user's points.
+   */ 
+  public int getPoints ()
+  {
+    //return points;
+    return 50;//for testing purposes only
+  }
+  
+  /**
+   * The setPoints method sets the user's points.
+   * 
+   * @param points This is the points that it will be set to.
+   */ 
+  public void setPoints (int points)
+  {
+    this.points = points;
+  }
+  
+  /**
+   * The getDay method gets the user's virtual day.
+   * 
+   * @return day the int variable of the user's virtual day.
+   */ 
+  public int getDay ()
+  {
+    return day;
+  }
+  
+  /**
+   * The getHour method gets the user's virtual hour.
+   * 
+   * @return hour the int variable of the user's virtual hour.
+   */ 
+  public int getHour ()
+  {
+    return hour;
+  }
+  
+  /**
+   * The getMinute method gets the user's virtual minute.
+   * 
+   * @return minute the int variable of the user's virtual minute.
+   */ 
+  public int getMinute ()
+  {
+    return minute;
+  }
+  
+  /**
+   * The handleFridgeDialog method handles the user's choice in the fridge dialog.
+   * The first if statement checks if the user did not close the dialog.
+   * If true, the next if statement checks if the user chose to feed their critter.
+   * If true, the next if statement checks if the critter is too full to eat more food,
+   * which means that the nutrient value of the food and the critter's fullness level exceeds 10.
+   * If true, a JOptionPane tells the user that the critter is too full to eat anymore.
+   * Else, the food is added to the stomach is eaten is set to true.
+   * The next if statement checks if eaten is true or if the user chose to throw out the food.
+   * If true, the food will be removed from the fridge and repaint the graphics. 
+   * 
+   */
+  public void handleFridgeDialog()
+  {
+    if (fridgeDialog!=JOptionPane.CLOSED_OPTION)
+    {
+      if (fridgeDialog==0)
+      {
+        if (myCritter.getFullness(0)+selectedItem.getNutrientValue()>10)//meal
+        {
+          JOptionPane.showMessageDialog(this, "Your critter is too full to eat this!");
+          fridgeDialog=0;
+          eaten=false;
+        }
+        else
+        {
+          myCritter.addStomach(selectedItem,0);//meal
+          eaten=true;
+        }
+      }
+      if (eaten=true||fridgeDialog==1)
+      {
+        fridge.remove(selectedIndex);
+        repaint();
+      }
+    }
+  }
+  
+  /**
+   * The fullnessBar method displays the bar that represents how full the critter is per meal.
+   * 
+   * @param g is the Graphics class to be used to display graphics.
+   * 
+   */
+  public void fullnessBar(Graphics g)
+  {
+    g.setColor(Color.blue);
+    g.fillRect(15,497,myCritter.getFullness(0)*74,28);//meal
+  }
+  
+  /**
+   * The mouseClicked method listens for a mouse release.
+   *
+   * The for loop starts from 0, runs while less than the size of the fridge times 63 and increments by 63 each time.
+   * That for loop is for checking through every icon in the fridge.
+   * The first if statement checks if the user clicked one of the food icons.
+   * If true, the selectedItem and selectedIndex variables are assigned according to the Food item clicked.
+   * Then the fridgeDialog is shown to ask if the user wants to feed or throw out the food.
+   * The next if statement checks if the user clicked on the door.
+   * If true, the leaveDialog asks the user where they want to go by showing a menu of options to choose from. 
+   * 
+   * <p>
+   * <b>Local Variable Dictionary: </b>
+   * <p>
+   * <b> fridgeOptions [] </b> Object of the options of the fridgeDialog.
+   * <p>
+   * <b> col </b> The integer loop variable that starts from 0, runs while less than the size of the fridge times 63 and increments by 63 each time.
+   * <p>
+   * <b> options [] </b> An array of instances of the JButton class for the options of the leaveDialog.
+   * <p>
+   * <b> leaveOptionPane </b> An instance of the JOptionPane that asks the user where they want to go.
+   * 
+   * @param e MouseEvent that stores the user's mouse actions.
+   */
+  public void mouseClicked(MouseEvent e) 
+  {
+    for (int col=0; col<fridge.size()*63; col+=63)
+    {
+      if (GroceryStore.correctCol(e.getX(),col+8)&&e.getY()>=8&&e.getY()<=68)
+      {
+        selectedItem=fridge.get(col/63);
+        selectedIndex=col/63;
+        Object [] fridgeOptions = {"Feed Critter","Throw Out"};
+        fridgeDialog = JOptionPane.showOptionDialog(this, selectedItem.getName()+"\nFood Group: "+selectedItem.getFoodGroup()
+                                                      +"\nNutritional Value: "+selectedItem.getNutrientValue(),                                   
+                                                    "My Fridge",
+                                                    JOptionPane.YES_NO_OPTION,
+                                                    JOptionPane.PLAIN_MESSAGE,
+                                                    new ImageIcon(selectedItem.getIcon()),    
+                                                    fridgeOptions, 
+                                                    fridgeOptions[0]);
+        handleFridgeDialog();
+      }
+    }
+    if (e.getX()>=26&&e.getX()<=135&&e.getY()>=275&&e.getY()<=405)
+    {
+      JButton []options = {storeButton,recButton,docButton,infoButton,menuButton};
+      JOptionPane leaveOptionPane=new JOptionPane("Where do you want to go?", JOptionPane.QUESTION_MESSAGE, JOptionPane.YES_NO_OPTION, new ImageIcon("images/Critter/gps.jpg"), options);
+      leaveDialog = leaveOptionPane.createDialog(this, "GPS Navigator Menu");
+      leaveDialog.setVisible(true);
+    }
+  }
+  
+  /**
+   * The mouseMoved method listens for a mouse movement.
+   * The first if statement checks if the user hovered over the door and if true, sets hoverDoor to true, else, false. 
+   * The first if statement checks if the user hovered over the critter and if true, sets hoverCritter to true, else, false. 
+   * The first if statement checks if the user hovered over the calendar and if true, sets hoverCalendar to true, else, false. 
+   * 
+   * @param e MouseEvent that stores the user's mouse actions.
+   */
+  @Override
+  public void mouseMoved(MouseEvent e) {
+    
+    if (e.getX()>=26&&e.getX()<=135&&e.getY()>=275&&e.getY()<=405)
+    {
+      hoverDoor=true;
+    }
+    else
+    {
+      hoverDoor=false;
+    }
+    if (e.getX()>=200&&e.getX()<=540&&e.getY()>=140&&e.getY()<=470)
+    {
+      hoverCritter=true;
+    }
+    else
+    {
+      hoverCritter=false;
+    }
+    if (e.getX()>=605&&e.getX()<=760&&e.getY()>=85&&e.getY()<=260)
+    {
+      hoverCalendar=true;
+    }
+    else
+    {
+      hoverCalendar=false;
+    }
+    repaint();
+  }
+  
+  /**
+   * The mousePressed method listens for a mouse press.
+   * @param e MouseEvent that stores the user's mouse actions.
+   */
+  @Override
+  public void mousePressed(MouseEvent e) {}
+  
+  /**
+   * The mouseEntered method listens for a mouse enter.
+   * @param e MouseEvent that stores the user's mouse actions.
+   */
+  @Override
+  public void mouseEntered(MouseEvent e){}
+  
+  /**
+   * The mouseExited method listens for a mouse exit.
+   * @param e MouseEvent that stores the user's mouse actions.
+   */
+  @Override
+  public void mouseExited(MouseEvent e) {}
+  
+  /**
+   * The mouseReleased method listens for a mouse release.
+   * @param e MouseEvent that stores the user's mouse actions.
+   */
+  @Override
+  public void mouseReleased(MouseEvent e){}
+  
+  /**
+   * The mouseDragged method listens for a mouse drag.
+   * @param e MouseEvent that stores the user's mouse actions.
+   */
+  @Override
+  public void mouseDragged(MouseEvent e){}
+  
+  /**
+   * Paints the graphics on to the JPanel
+   * If hoverDoor is true, the door is drawn with a glowing edge.
+   * If hoverCritter is true, the speech bubble is drawn.
+   * If hoverCalendar is true, the schedule is drawn.
+   * If eaten is true and the user chooses to feed the critter in the fridgeDialog, the speech bubble displays the food eaten.
+   * If minute has one digit, a leading zero image is drawn before the corresponding minute image.
+   * Else, both minute digits are displayed with the correct image numbers
+   * If hour has one digit, a leading zero image is drawn before the corresponding hour image.
+   * Else, both hour digits are displayed with the correct image numbers
+   * The for loop starts from 0, runs while less than the amount of food in the fridge and increments by one each time.
+   * 
+   * 
+   * <p>
+   * <b>Local Variable Dictionary: </b>
+   * <p>
+   * <b> x</b> The integer loop variable that starts from 0, runs while less than the amount of food in the fridge and increments by one each time in order to display all the food in the fridge.
+   * <p>
+   * <b>speechBubble</b> This creates an instance of the Image class to store the image of the speech bubble. 
+   */
+  @Override
+  public void paintComponent(Graphics g)
+  {
+    Image speechBubble=new ImageIcon ("images/Critter/SpeechBubble.png").getImage();
+    
+    g.drawImage(new ImageIcon ("images/Critter/EmptyHomeBG.jpg").getImage(), 0, 0,this);
+    g.drawImage(new ImageIcon ("images/Critter/morning.png").getImage(),4,70,this);
+    g.drawImage(new ImageIcon ("images/Critter/"+critterColour+"/"+critterColour+"Adult.png").getImage(),200,140,this);
+    
+    if (hoverDoor)
+    {
+      g.drawImage(new ImageIcon ("images/Critter/GlowDoor.png").getImage(), 0, 250,this);
+    }
+    if (hoverCritter)
+    {
+      g.drawImage(speechBubble, 30, 355,this);
+    }
+    if (hoverCalendar)
+    {
+      g.drawImage(new ImageIcon ("images/Critter/Schedule.png").getImage(), 17, 85,this);
+    }
+    
+    if (eaten=true&&fridgeDialog==0)
+    {
+      g.drawImage(speechBubble, 30, 355,this);
+      g.drawImage(new ImageIcon((myCritter.getStomach()).getIcon()).getImage(),85, 385,this);
+//      eaten=false;
+      fridgeDialog=-1;
+    }
+    
+    fullnessBar(g);
+    
+    if (hour<10)
+    {
+      g.drawImage(new ImageIcon("images/Critter/0.png").getImage(),632,289,this);
+      g.drawImage(new ImageIcon("images/Critter/"+hour+".png").getImage(),656,289,this);
+    }
+    else
+    {
+      g.drawImage(new ImageIcon("images/Critter/"+hour/10+".png").getImage(),632,289,this);
+      g.drawImage(new ImageIcon("images/Critter/"+hour%10+".png").getImage(),656,289,this);
+    }
+    
+    
+    if (minute<10)
+    {
+      g.drawImage(new ImageIcon("images/Critter/0.png").getImage(),696,289,this);
+      g.drawImage(new ImageIcon("images/Critter/"+minute+".png").getImage(),720,289,this);
+    }
+    else
+    {
+      g.drawImage(new ImageIcon("images/Critter/"+minute/10+".png").getImage(),696,289,this);
+      g.drawImage(new ImageIcon("images/Critter/"+minute%10+".png").getImage(),720,289,this);
+    }
+    
+    //restrict fridge repainting
+    for (int x=0;x<fridge.size();x++)
+    {
+      g.drawImage(new ImageIcon((fridge.get(x)).getIcon()).getImage(),x*63+8, 8,this);
+    }
+  } 
+}
